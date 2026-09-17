@@ -2,6 +2,7 @@
 
 from playwright.async_api import async_playwright
 
+from waypoint.policy import BrowserPolicy
 from waypoint.schema import Action, Inputs, Observation, Target
 
 # Controlled observation implementation, never model/artifact-provided script.
@@ -32,17 +33,22 @@ OBSERVE = """() => {
 class BrowserSurface:
     capabilities = frozenset({"structural", "screenshots", "manual_events"})
 
-    def __init__(self, url: str, *, headed=False):
+    def __init__(self, url: str, *, headed=False, policy=None):
         self.url = url
         self.headed = headed
+        self.policy = policy or BrowserPolicy.for_url(url)
+        self.policy.check_url(url)
+        self.violation = None
 
     async def __aenter__(self):
         self._pw = await async_playwright().start()
         self._browser = await self._pw.chromium.launch(headless=not self.headed)
         self._context = await self._browser.new_context(
-            viewport={"width": 1200, "height": 850}
+            viewport={"width": 1200, "height": 850}, service_workers="block"
         )
+        await self._context.route("**/*", self._route)
         self._page = await self._context.new_page()
+        self._context.on("page", self._popup)
         self._page.set_default_timeout(5000)
         await self._page.goto(self.url)
         await (
@@ -56,6 +62,26 @@ class BrowserSurface:
         await self._browser.close()
         await self._pw.stop()
 
+    async def _route(self, route):
+        try:
+            self.policy.check_url(route.request.url)
+            if route.request.method != "GET":
+                raise ValueError("policy: non-GET request denied")
+            await route.continue_()
+        except ValueError as exc:
+            self.violation = str(exc)
+            await route.abort()
+
+    async def _popup(self, page):
+        self.violation = "policy: unexpected popup"
+        await page.close()
+
+    def _check_session(self):
+        if self.violation:
+            raise ValueError(self.violation)
+        for frame in self._page.frames:
+            self.policy.check_url(frame.url)
+
     async def _frame(self):
         iframe = self._page.locator('iframe[title="Member workspace"]')
         if await iframe.count() != 1:
@@ -63,6 +89,7 @@ class BrowserSurface:
         return await (await iframe.element_handle()).content_frame()
 
     async def observe(self) -> Observation:
+        self._check_session()
         return Observation.model_validate(await (await self._frame()).evaluate(OBSERVE))
 
     async def _resolve(self, target: Target, inputs: Inputs):
@@ -83,7 +110,12 @@ class BrowserSurface:
         return locator
 
     async def act(self, action: Action, inputs: Inputs):
+        self._check_session()
         locator = await self._resolve(action.target, inputs)
+        actual = await locator.evaluate(
+            """e=>({tag:e.tagName,name:e.name||'',text:(e.innerText||'').trim(),href:e.href||'',method:e.form?.method||'',form_action:e.form?.action||''})"""
+        )
+        self.policy.check_action(action, actual)
         if action.kind == "fill":
             await locator.fill(getattr(inputs, action.input))
         elif action.kind == "click":
