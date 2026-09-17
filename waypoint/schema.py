@@ -39,7 +39,14 @@ class Target(Model):
 
 
 class Predicate(Model):
-    op: Literal["heading", "field_equals_input", "field_equals", "input_value", "table_present", "no_dialog"]
+    op: Literal[
+        "heading",
+        "field_equals_input",
+        "field_equals",
+        "input_value",
+        "table_present",
+        "no_dialog",
+    ]
     field: str = ""
     value: str = ""
     input: Literal["memberId"] | None = None
@@ -80,7 +87,9 @@ class Screen(Model):
 class State(Model):
     id: str
     screen: str | None = None
-    progress: Literal["search", "query_bound", "results", "identity_verified", "invoices", "terminal"]
+    progress: Literal[
+        "search", "query_bound", "results", "identity_verified", "invoices", "terminal"
+    ]
     outcome: Literal["succeeded", "member_not_found"] | None = None
     checkpoint: bool = False
 
@@ -115,7 +124,9 @@ class Capability(Model):
     app: Literal["Member Console"] = "Member Console"
     app_version: Literal["1.0"] = "1.0"
     profile: Literal["synthetic-local"] = "synthetic-local"
-    required_inputs: dict[str, Literal["member_id"]] = Field(default_factory=lambda: {"memberId": "member_id"})
+    required_inputs: dict[str, Literal["member_id"]] = Field(
+        default_factory=lambda: {"memberId": "member_id"}
+    )
     output_type: Literal["invoice_summary"] = "invoice_summary"
     entry: str
     screens: dict[str, Screen]
@@ -147,13 +158,19 @@ class Capability(Model):
         ids = set()
         reachable = {self.entry}
         for t in self.transitions:
-            if t.id in ids or t.source not in self.states or t.destination not in self.states:
+            if (
+                t.id in ids
+                or t.source not in self.states
+                or t.destination not in self.states
+            ):
                 raise ValueError("duplicate transition or missing target")
             ids.add(t.id)
             if self.states[t.source].outcome:
                 raise ValueError("terminal has outgoing transition")
         for _ in self.states:
-            reachable.update(t.destination for t in self.transitions if t.source in reachable)
+            reachable.update(
+                t.destination for t in self.transitions if t.source in reachable
+            )
         if set(self.states) != reachable:
             raise ValueError("unreachable state")
         for terminal in self.terminals:
@@ -184,7 +201,9 @@ class Result(Model):
     run_id: str
     capability_id: str
     revision: int
-    status: Literal["succeeded", "business_outcome", "awaiting_intervention", "failed", "cancelled"]
+    status: Literal[
+        "succeeded", "business_outcome", "awaiting_intervention", "failed", "cancelled"
+    ]
     outputs: Summary | None = None
     business_code: str | None = None
     state: str
