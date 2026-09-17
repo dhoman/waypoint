@@ -1,0 +1,24 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "waypoint-ui"
+version = "0.1.0"
+description = "Discover a bounded UI capability; replay it without a model"
+requires-python = ">=3.11"
+dependencies = ["pydantic>=2.10,<3", "playwright>=1.58,<2"]
+
+[project.optional-dependencies]
+discovery = ["openai>=2,<3"]
+dev = ["pytest>=8,<10", "pytest-asyncio>=1,<2", "ruff>=0.12"]
+
+[project.scripts]
+waypoint = "waypoint.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["waypoint"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
