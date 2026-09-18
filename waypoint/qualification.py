@@ -53,4 +53,4 @@ def qualify(cap: Capability, run_dirs):
     for s in qualified.screens.values():
         s.provenance.validated = s.id in screens
         s.provenance.evidence.extend(evidence)
-    return Capability.model_validate(qualified.model_dump())
+    return type(cap).model_validate(qualified.model_dump())

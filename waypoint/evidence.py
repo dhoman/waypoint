@@ -75,8 +75,9 @@ class Trace:
 
 def source_digest():
     digest = hashlib.sha256()
-    for path in sorted(Path(__file__).parent.glob("*")):
-        if path.suffix in {".py", ".html"}:
-            digest.update(path.name.encode())
+    root = Path(__file__).parent
+    for path in sorted(root.rglob("*")):
+        if path.suffix in {".py", ".html", ".js"}:
+            digest.update(str(path.relative_to(root)).encode())
             digest.update(path.read_bytes())
     return digest.hexdigest()

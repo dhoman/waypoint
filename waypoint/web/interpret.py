@@ -6,6 +6,11 @@ from decimal import Decimal
 
 async def holds(predicate, observation, inputs, browser):
     p = predicate
+    refs = [p.input]
+    if p.target:
+        refs.extend([p.target.name_input, p.target.row_input])
+    if any(ref and ref not in inputs for ref in refs):
+        raise ValueError("unknown predicate input")
     if p.op == "heading":
         return p.value in observation.headings
     if p.op == "heading_input":

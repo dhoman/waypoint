@@ -19,7 +19,11 @@ class NoModels(importlib.abc.MetaPathFinder):
             "anthropic",
             "httpx",
             "requests",
-        } or fullname in {"waypoint.provider", "waypoint.discovery"}:
+        } or fullname in {
+            "waypoint.provider",
+            "waypoint.discovery",
+            "waypoint.web.discovery",
+        }:
             raise ImportError("Strict replay blocks model dependencies")
         return None
 

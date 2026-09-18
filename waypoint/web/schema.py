@@ -13,8 +13,14 @@ class Target(Model):
     name: str = ""
     role: str = ""
     frame: str = ""  # Empty means main document; otherwise an exact frame name/title.
-    name_input: str | None = None
-    row_input: str | None = None
+    name_input: str | None = Field(
+        default=None,
+        description="Parameter KEY replacing the target's visible name. Null for constant labels such as Search or Member ID; filling a field uses Action.input instead.",
+    )
+    row_input: str | None = Field(
+        default=None,
+        description="Parameter KEY identifying an exact cell in the target's containing table row, otherwise null.",
+    )
 
 
 class Action(Model):

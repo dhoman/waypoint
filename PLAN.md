@@ -2,9 +2,9 @@
 
 ## General website correction
 
-- [ ] Generic browser observation/targeting and runtime URL/action permissions.
-- [ ] Version 2 artifact with arbitrary typed inputs, learned recognition and extraction.
-- [ ] Generic LLM discovery, deterministic replay and same-session handoff in the CLI.
+- [x] Generic browser observation/targeting and runtime URL/action permissions.
+- [x] Version 2 artifact with arbitrary typed inputs, learned recognition and extraction.
+- [x] Generic LLM discovery, deterministic replay and same-session handoff in the CLI.
 - [ ] Prove reuse against unrelated applications and a public site without changing engine code.
 - [ ] Update documentation, retain real evidence, and commit verified milestones.
 

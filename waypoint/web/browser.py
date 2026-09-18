@@ -190,10 +190,17 @@ class Browser:
             try:
                 for _, frame in await self._frames():
                     await frame.evaluate(
-                        """() => {if(!window.__waypointQuiet){window.__waypointQuiet={last:performance.now()};new MutationObserver(()=>window.__waypointQuiet.last=performance.now()).observe(document.documentElement,{childList:true,subtree:true,attributes:true,characterData:true})}}"""
+                        """() => {if(!window.__waypointQuiet){window.__waypointQuiet={last:performance.now()};new MutationObserver(()=>window.__waypointQuiet.last=performance.now()).observe(document.documentElement,{childList:true,subtree:true,attributes:true,characterData:true})}else{window.__waypointQuiet.last=performance.now()}}"""
                     )
                     await frame.wait_for_function(
-                        "() => performance.now()-window.__waypointQuiet.last>150 && ![...document.querySelectorAll('[aria-busy=true],[role=progressbar],[role=status]')].some(e=>e.getClientRects().length && (e.getAttribute('aria-busy')==='true'||e.getAttribute('role')==='progressbar'||/loading/i.test(e.innerText)))",
+                        """() => {
+                          if (!window.__waypointQuiet) {
+                            window.__waypointQuiet={last:performance.now()};
+                            new MutationObserver(()=>window.__waypointQuiet.last=performance.now()).observe(document.documentElement,{childList:true,subtree:true,attributes:true,characterData:true});
+                            return false;
+                          }
+                          return document.readyState!=='loading' && performance.now()-window.__waypointQuiet.last>150 && ![...document.querySelectorAll('[aria-busy=true],[role=progressbar],[role=status]')].some(e=>e.getClientRects().length && (e.getAttribute('aria-busy')==='true'||e.getAttribute('role')==='progressbar'||/loading/i.test(e.innerText)));
+                        }""",
                         timeout=max(1, (deadline - monotonic()) * 1000),
                     )
                 return
