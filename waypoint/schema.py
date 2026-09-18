@@ -98,6 +98,7 @@ class Transition(Model):
     id: str
     source: str
     destination: str
+    alternatives: dict[str, list[Predicate]] = Field(default_factory=dict)
     action: Action
     guards: list[Predicate] = Field(default_factory=list)
     postconditions: list[Predicate] = Field(default_factory=list)
@@ -165,11 +166,19 @@ class Capability(Model):
             ):
                 raise ValueError("duplicate transition or missing target")
             ids.add(t.id)
+            if any(dest not in self.states for dest in t.alternatives):
+                raise ValueError("missing alternative target")
             if self.states[t.source].outcome:
                 raise ValueError("terminal has outgoing transition")
         for _ in self.states:
             reachable.update(
                 t.destination for t in self.transitions if t.source in reachable
+            )
+            reachable.update(
+                dest
+                for t in self.transitions
+                if t.source in reachable
+                for dest in t.alternatives
             )
         if set(self.states) != reachable:
             raise ValueError("unreachable state")

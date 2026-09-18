@@ -1,0 +1,22 @@
+{
+  "status": "succeeded",
+  "run_id": "discovery-a-4c433bca",
+  "outputs": {
+    "memberId": "M-101",
+    "currency": "USD",
+    "invoices": [
+      {
+        "invoice_id": "INV-1011",
+        "amount": 120.0,
+        "status": "Paid"
+      },
+      {
+        "invoice_id": "INV-1012",
+        "amount": 45.5,
+        "status": "Overdue"
+      }
+    ],
+    "total": 165.5
+  },
+  "kind": "genuine_discovery"
+}

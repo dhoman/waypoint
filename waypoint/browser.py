@@ -1,7 +1,10 @@
 """The only module that knows Playwright objects; one async session owner."""
 
+import json
+
 from playwright.async_api import async_playwright
 
+from waypoint.evidence import sanitized
 from waypoint.policy import BrowserPolicy
 from waypoint.schema import Action, Inputs, Observation, Target
 
@@ -10,6 +13,7 @@ OBSERVE = """() => {
  const visible=e=>!!(e.getClientRects().length)&&getComputedStyle(e).visibility!=='hidden';
  const text=e=>(e.innerText||'').trim();
  const fields={};document.querySelectorAll('dt').forEach(e=>{fields[text(e)]=text(e.nextElementSibling)});
+ document.querySelectorAll('input:not([type=hidden])').forEach(e=>{if(e.labels?.length)fields['input:'+text(e.labels[0])]=e.value});
  return {
  headings:[...document.querySelectorAll('h1')].filter(visible).map(text), fields,
  controls:[...document.querySelectorAll('button,a,input:not([type=hidden])')].filter(visible).map(e=>({
@@ -91,6 +95,39 @@ class BrowserSurface:
     async def observe(self) -> Observation:
         self._check_session()
         return Observation.model_validate(await (await self._frame()).evaluate(OBSERVE))
+
+    async def wait_ready(self, timeout_s):
+        frame = await self._frame()
+        await frame.wait_for_function(
+            "() => ![...document.querySelectorAll('[role=status]')].some(e=>e.innerText.includes('Loading'))",
+            timeout=timeout_s * 1000,
+        )
+
+    async def read(self, target, inputs):
+        locator = await self._resolve(target, inputs)
+        return await locator.inner_text()
+
+    async def capture(self, directory, name):
+        # Only synthetic-local profile is admitted. Masks all form values, including
+        # operator notes. This is not a production PII redactor.
+        snapshot, screenshot = name + ".json", name + ".png"
+        try:
+            obs = await self.observe()
+            (directory / snapshot).write_text(
+                json.dumps(sanitized(obs), indent=2) + "\n"
+            )
+            frame = await self._frame()
+            await self._page.screenshot(
+                path=str(directory / screenshot), mask=[frame.locator("input,textarea")]
+            )
+            return [snapshot, screenshot]
+        except Exception:
+            (directory / snapshot).write_text(
+                json.dumps(
+                    {"capture": "unavailable", "policy_violation": self.violation}
+                )
+            )
+            return [snapshot]
 
     async def _resolve(self, target: Target, inputs: Inputs):
         if target.frame != "Member workspace":

@@ -1,0 +1,38 @@
+{
+  "headings": [
+    "Member invoices"
+  ],
+  "fields": {
+    "Member ID": "M-101",
+    "Name": "Ada Mercer",
+    "Access": "Standard"
+  },
+  "controls": [],
+  "tables": [
+    {
+      "caption": "Invoice ledger",
+      "headers": [
+        "Invoice",
+        "Amount USD",
+        "Status"
+      ],
+      "rows": [
+        [
+          "INV-1011",
+          "120.00",
+          "Paid"
+        ],
+        [
+          "INV-1012",
+          "45.50",
+          "Overdue"
+        ]
+      ]
+    }
+  ],
+  "dialog": false,
+  "loading": false,
+  "readonly": false,
+  "version": "1.0",
+  "text": "Member invoices\nMember ID\nM-101\nName\nAda Mercer\nAccess\nStandard\nInvoice ledger\nInvoice\tAmount USD\tStatus\nINV-1011\t120.00\tPaid\nINV-1012\t45.50\tOverdue"
+}
