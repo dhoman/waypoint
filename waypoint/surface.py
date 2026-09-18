@@ -3,11 +3,14 @@
 from pathlib import Path
 from typing import Protocol
 
+from waypoint.ownership import Ownership
 from waypoint.schema import Action, Inputs, Observation, Target
 
 
 class Surface(Protocol):
     capabilities: frozenset[str]
+    ownership: Ownership
+    event_sink: object
 
     async def __aenter__(self) -> "Surface": ...
     async def __aexit__(self, *args): ...

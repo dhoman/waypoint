@@ -4,6 +4,7 @@ from collections import Counter
 from decimal import Decimal, InvalidOperation
 from time import monotonic
 
+from waypoint.delivery import DeliveryLedger
 from waypoint.evidence import Trace, sanitized
 from waypoint.recognition import holds, recognize
 from waypoint.schema import Capability, Inputs, Invoice, Result, Summary
@@ -61,8 +62,11 @@ class Replay:
         self.steps = 0
         self.last_obs = None
         self.expected = []
+        self.surface.event_sink = trace.emit
+        self.human_started = None
+        self.delivery = DeliveryLedger()
 
-    async def _observe(self, timeout_s=5):
+    async def _observe(self, timeout_s=5, *, allow_wait=True):
         started = monotonic()
         obs = await self.surface.observe()
         self.last_obs = obs
@@ -78,7 +82,7 @@ class Replay:
             duration_s=monotonic() - started,
             timing="observation_recognition",
         )
-        if recognition.kind == "transient":
+        if recognition.kind == "transient" and allow_wait:
             started = monotonic()
             await self.surface.wait_ready(timeout_s)
             self.trace.emit(
@@ -94,6 +98,7 @@ class Replay:
         return obs, recognition
 
     async def run(self):
+        self.surface.ownership.require_automation()
         try:
             while self.steps < self.cap.max_steps:
                 state = self.cap.states[self.state]
@@ -145,11 +150,14 @@ class Replay:
                 if transition.action.kind == "extract":
                     self.outputs = extract_summary(obs, self.inputs)
                 elif transition.action.kind != "outcome":
-                    await self.surface.act(transition.action, self.inputs)
+                    await self.delivery.attempt(
+                        transition.id,
+                        lambda: self.surface.act(transition.action, self.inputs),
+                    )
                 self.steps += 1
                 destination = transition.destination
                 if not self.cap.states[transition.destination].outcome:
-                    post, recognized = await self._observe(transition.timeout_s)
+                    post, recognized = await self._observe(transition.timeout_s, allow_wait=transition.recovery == "wait_loading_then_check")
                     if recognized.kind == "unknown":
                         return await self._stop(
                             "awaiting_intervention",
@@ -171,6 +179,8 @@ class Replay:
                         raise ValueError("unexpected or ambiguous destination")
                     destination = candidates[0]
                 self.state = destination
+                if self.delivery.effect(transition.id) == "uncertain":
+                    self.delivery.confirm(transition.id)
                 self.trace.emit(
                     "transition_completed", state=self.state, transition=transition.id
                 )
@@ -188,6 +198,8 @@ class Replay:
             return await self._stop("failed", category, str(exc))
 
     def _result(self, status, **kwargs):
+        if status != "awaiting_intervention":
+            self.surface.ownership.terminate()
         result = Result(
             run_id=self.trace.run_id,
             capability_id=self.cap.capability_id,
@@ -211,6 +223,67 @@ class Replay:
         evidence = await self.surface.capture(
             self.trace.directory, f"failure-{self.trace.sequence}"
         )
+        if status == "awaiting_intervention":
+            self.surface.ownership.request()
+            self.human_started = monotonic()
+            self.trace.emit(
+                "intervention_requested",
+                state=self.state,
+                transition=self.transition,
+                reason=reason,
+                evidence=evidence,
+                ownership=self.surface.ownership.state,
+                permitted_checkpoints=[
+                    s.id for s in self.cap.states.values() if s.checkpoint
+                ],
+            )
         return self._result(
             status, failure_category=category, reason=reason, evidence=evidence
         )
+
+    def take_control(self, token):
+        self.surface.ownership.take(token)
+        self.trace.emit(
+            "control_transferred",
+            ownership="human",
+            state=self.state,
+            transition=self.transition,
+        )
+
+    async def resume(self, token):
+        self.surface.ownership.begin_resume(token)
+        valid = False
+        try:
+            obs, recognition = await self._observe()
+            checkpoints = [
+                s
+                for s in self.cap.states.values()
+                if s.checkpoint
+                and s.screen == recognition.screen
+                and recognition.kind == "recognized"
+            ]
+            if len(checkpoints) != 1:
+                raise ValueError("resume: no unique permitted checkpoint")
+            checkpoint = checkpoints[0]
+            choose_transition(self.cap, checkpoint.id, obs, self.inputs)
+            self.state = checkpoint.id
+            if self.transition and self.delivery.effect(self.transition) == "uncertain":
+                self.delivery.confirm(self.transition)
+            valid = True
+            self.trace.emit(
+                "resume_validated",
+                state=self.state,
+                transition=self.transition,
+                timing="human_wait",
+                duration_s=monotonic() - self.human_started,
+            )
+        except ValueError as exc:
+            self.trace.emit("resume_rejected", reason=str(exc), state=self.state)
+        finally:
+            self.surface.ownership.finish_resume(valid=valid)
+        return valid
+
+    def cancel(self):
+        if self.surface.ownership.state not in {"human", "awaiting_human"}:
+            raise ValueError("ownership: cancellation requires a paused run")
+        return self._result("cancelled", reason="Operator cancelled")

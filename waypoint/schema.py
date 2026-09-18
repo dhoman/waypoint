@@ -104,7 +104,7 @@ class Transition(Model):
     postconditions: list[Predicate] = Field(default_factory=list)
     risk: Literal["read", "navigation", "write"] = "read"
     timeout_s: float = Field(default=5, gt=0, le=30)
-    retries: int = Field(default=0, ge=0, le=2)
+    retries: Literal[0] = 0
     retry_safe: bool = False
     recovery: Literal["wait_loading_then_check", "stop"] = "wait_loading_then_check"
     provenance: Provenance

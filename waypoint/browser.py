@@ -1,10 +1,12 @@
 """The only module that knows Playwright objects; one async session owner."""
 
 import json
+from time import monotonic
 
 from playwright.async_api import async_playwright
 
 from waypoint.evidence import sanitized
+from waypoint.ownership import Ownership
 from waypoint.policy import BrowserPolicy
 from waypoint.schema import Action, Inputs, Observation, Target
 
@@ -43,6 +45,8 @@ class BrowserSurface:
         self.policy = policy or BrowserPolicy.for_url(url)
         self.policy.check_url(url)
         self.violation = None
+        self.ownership = Ownership()
+        self.event_sink = lambda *args, **kwargs: None
 
     async def __aenter__(self):
         self._pw = await async_playwright().start()
@@ -51,6 +55,15 @@ class BrowserSurface:
             viewport={"width": 1200, "height": 850}, service_workers="block"
         )
         await self._context.route("**/*", self._route)
+        await self._context.expose_binding("waypointManualEvent", self._manual_event)
+        await self._context.add_init_script("""(() => {
+          for (const kind of ['click','input']) document.addEventListener(kind,e=>{
+            if (!e.isTrusted) return;
+            const t=e.target.closest('button,a,input,textarea,select'); if(!t)return;
+            const name=t.tagName==='INPUT'||t.tagName==='TEXTAREA' ? (t.getAttribute('aria-label')||t.labels?.[0]?.innerText||'field') : (t.innerText||'control');
+            window.waypointManualEvent({kind,tag:t.tagName,target:name.slice(0,100),value:kind==='input'?'[redacted]':null});
+          },true);
+        })()""")
         self._page = await self._context.new_page()
         self._context.on("page", self._popup)
         self._page.set_default_timeout(5000)
@@ -79,6 +92,20 @@ class BrowserSurface:
     async def _popup(self, page):
         self.violation = "policy: unexpected popup"
         await page.close()
+
+    def _manual_event(self, source, event):
+        if self.ownership.state != "human" or source["page"] != self._page:
+            return
+        self.policy.check_url(source["frame"].url)
+        if event.get("kind") in {"click", "input"}:
+            self.event_sink(
+                "human_action",
+                kind=event["kind"],
+                tag=str(event.get("tag", ""))[:20],
+                target=str(event.get("target", ""))[:100],
+                value="[redacted]" if event["kind"] == "input" else None,
+                capture="in-page trusted DOM event; not proof of a physical human",
+            )
 
     def _check_session(self):
         if self.violation:
@@ -147,12 +174,28 @@ class BrowserSurface:
         return locator
 
     async def act(self, action: Action, inputs: Inputs):
+        self.ownership.require_automation()
         self._check_session()
+        obs = await self.observe()
+        if obs.dialog or obs.readonly or obs.loading:
+            raise ValueError("unsupported blocking state before action")
+        for key in ("Member ID", "Search ID"):
+            if key in obs.fields and obs.fields[key] != inputs.memberId:
+                raise ValueError("identity mismatch before action")
+        started = monotonic()
         locator = await self._resolve(action.target, inputs)
         actual = await locator.evaluate(
             """e=>({tag:e.tagName,name:e.name||'',text:(e.innerText||'').trim(),href:e.href||'',method:e.form?.method||'',form_action:e.form?.action||''})"""
         )
         self.policy.check_action(action, actual)
+        self.event_sink(
+            "target_resolved",
+            target=action.target.model_dump(),
+            timing="target_resolution",
+            duration_s=monotonic() - started,
+        )
+        self.ownership.require_automation()
+        started = monotonic()
         if action.kind == "fill":
             await locator.fill(getattr(inputs, action.input))
         elif action.kind == "click":
@@ -166,3 +209,9 @@ class BrowserSurface:
                 await locator.click()
         else:
             raise ValueError("unsupported surface action")
+        self.event_sink(
+            "action_delivered",
+            kind=action.kind,
+            timing="action",
+            duration_s=monotonic() - started,
+        )

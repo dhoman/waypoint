@@ -26,8 +26,50 @@ async def execute(args):
         return 0 if cap else 1
     cap = Capability.model_validate_json(Path(args.artifact).read_text())
     trace = Trace(args.out, cap)
+    if args.interactive and not args.headed:
+        raise ValueError("Interactive handoff requires --headed")
     async with BrowserSurface(args.url, headed=args.headed) as surface:
-        result = await Replay(cap, surface, inputs, trace).run()
+        runner = Replay(cap, surface, inputs, trace)
+        result = await runner.run()
+        while result.status == "awaiting_intervention" and args.interactive:
+            token = surface.ownership.token
+            print(
+                f"PAUSED {trace.run_id} at {runner.transition}: {result.reason}",
+                flush=True,
+            )
+            print(
+                f"Same browser remains live. Commands: take {token} | resume {token} | cancel",
+                flush=True,
+            )
+            while surface.ownership.state != "automation":
+                try:
+                    command = await asyncio.to_thread(input, "control> ")
+                    parts = command.strip().split()
+                    if parts == ["cancel"]:
+                        result = runner.cancel()
+                        break
+                    if parts == ["take", token]:
+                        runner.take_control(token)
+                        print(
+                            "Human owns the browser. Dismiss the notice or navigate to an allowed checkpoint, then resume.",
+                            flush=True,
+                        )
+                    elif parts == ["resume", token]:
+                        if not await runner.resume(token):
+                            print(
+                                "Resume rejected; human retains control. Restore a matching identity/checkpoint.",
+                                flush=True,
+                            )
+                    else:
+                        print("Invalid or stale command.", flush=True)
+                except EOFError:
+                    result = runner.cancel()
+                    break
+                except ValueError as exc:
+                    print(str(exc), flush=True)
+            if result.status == "cancelled":
+                break
+            result = await runner.run()
     print(result.model_dump_json(indent=2))
     return 0 if result.status in {"succeeded", "business_outcome"} else 2
 
@@ -42,6 +84,10 @@ def main():
     amend = commands.add_parser("amend")
     amend.add_argument("--artifact", required=True)
     amend.add_argument("--out", required=True)
+    inspect = commands.add_parser("inspect")
+    inspect.add_argument("--artifact", required=True)
+    inspect.add_argument("--runs", nargs="+", required=True)
+    inspect.add_argument("--out", default="runs/inspector.html")
     for command in ("discover", "replay"):
         p = commands.add_parser(command)
         p.add_argument("--url", default="http://127.0.0.1:8765/")
@@ -56,7 +102,15 @@ def main():
             p.add_argument("--model", default=os.environ.get("WAYPOINT_MODEL"))
         else:
             p.add_argument("--artifact", required=True)
+            p.add_argument("--interactive", action="store_true")
     args = parser.parse_args()
+    if args.command == "inspect":
+        from waypoint.inspector import render_inspector
+
+        cap = Capability.model_validate_json(Path(args.artifact).read_text())
+        render_inspector(cap, [Path(p) for p in args.runs], Path(args.out))
+        print(Path(args.out).resolve())
+        return
     if args.command == "amend":
         from waypoint.compiler import amend_missing_member
 
