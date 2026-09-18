@@ -1,5 +1,17 @@
 # Implementation plan
 
+## Package and extension-point refactor
+
+- [x] Baseline behavior; remove the retired version-1 implementation (user-approved).
+- [x] Separate domain, application wiring, discovery, runtime, surfaces, providers,
+  evidence, inspector and demo packages; keep current CLI/artifact formats stable.
+- [x] Make the surface/provider interfaces explicit and test substitution,
+  ownership, strict isolation and current-engine safety scenarios.
+- [ ] Document execution, class relationships, dependency rules and extension steps;
+  add contributor/agent instructions and a navigable documentation index.
+- [ ] Verify tests, installed-package resources and retained version-2 replay;
+  commit coherent milestones. Historical evidence is retained, not rewritten.
+
 ## General website correction
 
 - [x] Generic browser observation/targeting and runtime URL/action permissions.
