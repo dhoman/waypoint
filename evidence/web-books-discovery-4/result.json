@@ -1,0 +1,9 @@
+{
+  "status": "failed",
+  "reason": "ambiguous or missing target",
+  "failure_category": "ambiguous or missing target",
+  "evidence": [
+    "failure.json",
+    "failure.png"
+  ]
+}

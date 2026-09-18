@@ -1,0 +1,9 @@
+{
+  "checks": {
+    "provider_import": "blocked",
+    "external_connection": "blocked"
+  },
+  "api_credentials_removed": true,
+  "browser_network": "separate runtime origin/route allowlist",
+  "scope": "Python process guard, not OS-level sandbox"
+}

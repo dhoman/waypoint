@@ -1,0 +1,43 @@
+{
+  "title": "Member Console",
+  "headings": [
+    "Northstar Membership / Operations",
+    "Member invoices"
+  ],
+  "fields": {
+    "Member ID": "M-101",
+    "Name": "Ada Mercer",
+    "Access": "Standard"
+  },
+  "controls": [],
+  "tables": [
+    {
+      "caption": "Invoice ledger",
+      "headers": [
+        "Invoice",
+        "Amount USD",
+        "Status"
+      ],
+      "rows": [
+        [
+          "INV-1011",
+          "120.00",
+          "Paid"
+        ],
+        [
+          "INV-1012",
+          "45.50",
+          "Overdue"
+        ]
+      ]
+    }
+  ],
+  "frames": [
+    "",
+    "Member workspace"
+  ],
+  "dialog": false,
+  "loading": false,
+  "text": "\nNorthstar Membership / Operations Member Console \u00b7 version 1.0 \u00b7 Synthetic demonstration data\nMember invoices Member ID M-101 Name Ada Mercer Access Standard Invoice ledger Invoice Amount USD Status INV-1011 120.00 Paid INV-1012 45.50 Overdue Member Console \u00b7 version 1.0 \u00b7 Synthetic demonstration data",
+  "structure": "\nFRAME main\nh1 Northstar Membership / Operations\nFRAME Member workspace\nmain Member invoices\nMember ID\nM-101\nName\nAda Mercer\nAccess\nStandard\nInvoice ledger\nInvoice\tAmount USD\tStatus\nINV-1011\t120.00\tPaid\nINV-1012\t45.50\tOverdue\nh1 Member invoices\ndl \ndt Member ID\ndd M-101\ndt Name\ndd Ada Mercer\ndt Access\ndd Standard\ntable Invoice ledger\nInvoice\tAmount USD\tStatus\nINV-1011\t120.00\tPaid\nINV-1012\t45.50\tOverdue\ntr Invoice\tAmount USD\tStatus\nth Invoice\nth Amount USD\nth Status\ntr INV-1011\t120.00\tPaid\ntd INV-1011\ntd 120.00\ntd Paid\ntr INV-1012\t45.50\tOverdue\ntd INV-1012\ntd 45.50\ntd Overdue"
+}

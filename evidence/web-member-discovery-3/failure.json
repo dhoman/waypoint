@@ -1,0 +1,43 @@
+{
+  "title": "Member Console",
+  "headings": [
+    "Northstar Membership / Operations",
+    "Member search"
+  ],
+  "fields": {},
+  "controls": [
+    {
+      "target": {
+        "by": "label",
+        "name": "Member ID",
+        "role": "textbox",
+        "frame": "Member workspace"
+      },
+      "name": "Member ID",
+      "role": "textbox",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "button",
+        "name": "Search",
+        "frame": "Member workspace"
+      },
+      "name": "Search",
+      "role": "button",
+      "row": null,
+      "options": null
+    }
+  ],
+  "tables": [],
+  "frames": [
+    "",
+    "Member workspace"
+  ],
+  "dialog": false,
+  "loading": false,
+  "text": "\nNorthstar Membership / Operations Member Console \u00b7 version 1.0 \u00b7 Synthetic demonstration data\nMember search Member ID Search Member Console \u00b7 version 1.0 \u00b7 Synthetic demonstration data",
+  "structure": "\nFRAME main\nh1 Northstar Membership / Operations\nFRAME Member workspace\nmain Member search\nMember ID  Search\nh1 Member search"
+}

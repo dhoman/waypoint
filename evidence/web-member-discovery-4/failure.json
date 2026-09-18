@@ -1,0 +1,47 @@
+{
+  "title": "Member Console",
+  "headings": [
+    "Northstar Membership / Operations",
+    "Member profile"
+  ],
+  "fields": {
+    "Member ID": "M-101",
+    "Name": "Ada Mercer",
+    "Access": "Standard"
+  },
+  "controls": [
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Invoices",
+        "frame": "Member workspace"
+      },
+      "name": "Invoices",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "button",
+        "name": "Close account",
+        "frame": "Member workspace"
+      },
+      "name": "Close account",
+      "role": "button",
+      "row": null,
+      "options": null
+    }
+  ],
+  "tables": [],
+  "frames": [
+    "",
+    "Member workspace"
+  ],
+  "dialog": false,
+  "loading": false,
+  "text": "\nNorthstar Membership / Operations Member Console \u00b7 version 1.0 \u00b7 Synthetic demonstration data\nMember profile Member ID M-101 Name Ada Mercer Access Standard Invoices Close account Member Console \u00b7 version 1.0 \u00b7 Synthetic demonstration data",
+  "structure": "\nFRAME main\nh1 Northstar Membership / Operations\nFRAME Member workspace\nmain \nh1 Member profile\ndl \ndt Member ID\ndd M-101\ndt Name\ndd Ada Mercer\ndt Access\ndd Standard\na Invoices"
+}

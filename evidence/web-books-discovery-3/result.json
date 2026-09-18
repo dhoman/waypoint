@@ -1,0 +1,31 @@
+{
+  "status": "succeeded",
+  "run_id": "web-books-discovery-3-d3b03242",
+  "capability_id": "web-fd5451c60d",
+  "revision": 1,
+  "outputs": {
+    "book_titles": [
+      {
+        "title": "It's Only the Himalayas"
+      },
+      {
+        "title": "Full Moon over Noah\u2019s Ark: An Odyssey to Mount Ararat and Beyond"
+      },
+      {
+        "title": "See America: A Celebration of Our National Parks & Treasured Sites"
+      }
+    ],
+    "book_prices": [
+      {
+        "price": "\u00a345.17"
+      },
+      {
+        "price": "\u00a349.43"
+      },
+      {
+        "price": "\u00a348.87"
+      }
+    ]
+  },
+  "kind": "genuine_discovery"
+}

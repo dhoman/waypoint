@@ -1,0 +1,23 @@
+{
+  "status": "succeeded",
+  "run_id": "web-books-discovery-5-0c120135",
+  "capability_id": "web-fd5451c60d",
+  "revision": 1,
+  "outputs": {
+    "book_titles": [
+      {
+        "title": "It's Only the Himalayas",
+        "price": "\u00a345.17"
+      },
+      {
+        "title": "Full Moon over Noah\u2019s ...",
+        "price": "\u00a349.43"
+      },
+      {
+        "title": "See America: A Celebration ...",
+        "price": "\u00a348.87"
+      }
+    ]
+  },
+  "kind": "genuine_discovery"
+}

@@ -1,0 +1,49 @@
+{
+  "title": "Member Console",
+  "headings": [
+    "Northstar Membership / Operations",
+    "Search results"
+  ],
+  "fields": {
+    "Search ID": "M-101"
+  },
+  "controls": [
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "View profile",
+        "frame": "Member workspace"
+      },
+      "name": "View profile",
+      "role": "link",
+      "row": "M-101\tAda Mercer\tView profile",
+      "options": null
+    }
+  ],
+  "tables": [
+    {
+      "caption": "Members",
+      "headers": [
+        "Member ID",
+        "Name",
+        "Details"
+      ],
+      "rows": [
+        [
+          "M-101",
+          "Ada Mercer",
+          "View profile"
+        ]
+      ]
+    }
+  ],
+  "frames": [
+    "",
+    "Member workspace"
+  ],
+  "dialog": false,
+  "loading": false,
+  "text": "\nNorthstar Membership / Operations Member Console \u00b7 version 1.0 \u00b7 Synthetic demonstration data\nSearch results Search ID M-101 Members Member ID Name Details M-101 Ada Mercer View profile Member Console \u00b7 version 1.0 \u00b7 Synthetic demonstration data",
+  "structure": "\nFRAME main\nh1 Northstar Membership / Operations\nFRAME Member workspace\nmain Search results\nSearch ID\nM-101\nMembers\nMember ID\tName\tDetails\nM-101\tAda Mercer\tView profile\nh1 Search results\ndl Search ID\nM-101\ndt Search ID\ndd M-101\ntable Members\nMember ID\tName\tDetails\nM-101\tAda Mercer\tView profile\ntr Member ID\tName\tDetails\nth Member ID\nth Name\nth Details\ntr M-101\tAda Mercer\tView profile\ntd M-101\ntd Ada Mercer\ntd View profile\na View profile"
+}

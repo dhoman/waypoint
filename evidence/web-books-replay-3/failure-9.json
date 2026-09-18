@@ -1,0 +1,1349 @@
+{
+  "title": "Poetry | Books to Scrape - Sandbox",
+  "headings": [
+    "Poetry"
+  ],
+  "fields": {},
+  "controls": [
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Books to Scrape",
+        "frame": ""
+      },
+      "name": "Books to Scrape",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Home",
+        "frame": ""
+      },
+      "name": "Home",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Books",
+        "frame": ""
+      },
+      "name": "Books",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Books",
+        "frame": ""
+      },
+      "name": "Books",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Travel",
+        "frame": ""
+      },
+      "name": "Travel",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Mystery",
+        "frame": ""
+      },
+      "name": "Mystery",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Historical Fiction",
+        "frame": ""
+      },
+      "name": "Historical Fiction",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Sequential Art",
+        "frame": ""
+      },
+      "name": "Sequential Art",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Classics",
+        "frame": ""
+      },
+      "name": "Classics",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Philosophy",
+        "frame": ""
+      },
+      "name": "Philosophy",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Romance",
+        "frame": ""
+      },
+      "name": "Romance",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Womens Fiction",
+        "frame": ""
+      },
+      "name": "Womens Fiction",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Fiction",
+        "frame": ""
+      },
+      "name": "Fiction",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Childrens",
+        "frame": ""
+      },
+      "name": "Childrens",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Religion",
+        "frame": ""
+      },
+      "name": "Religion",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Nonfiction",
+        "frame": ""
+      },
+      "name": "Nonfiction",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Music",
+        "frame": ""
+      },
+      "name": "Music",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Default",
+        "frame": ""
+      },
+      "name": "Default",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Science Fiction",
+        "frame": ""
+      },
+      "name": "Science Fiction",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Sports and Games",
+        "frame": ""
+      },
+      "name": "Sports and Games",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Add a comment",
+        "frame": ""
+      },
+      "name": "Add a comment",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Fantasy",
+        "frame": ""
+      },
+      "name": "Fantasy",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "New Adult",
+        "frame": ""
+      },
+      "name": "New Adult",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Young Adult",
+        "frame": ""
+      },
+      "name": "Young Adult",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Science",
+        "frame": ""
+      },
+      "name": "Science",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Poetry",
+        "frame": ""
+      },
+      "name": "Poetry",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Paranormal",
+        "frame": ""
+      },
+      "name": "Paranormal",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Art",
+        "frame": ""
+      },
+      "name": "Art",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Psychology",
+        "frame": ""
+      },
+      "name": "Psychology",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Autobiography",
+        "frame": ""
+      },
+      "name": "Autobiography",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Parenting",
+        "frame": ""
+      },
+      "name": "Parenting",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Adult Fiction",
+        "frame": ""
+      },
+      "name": "Adult Fiction",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Humor",
+        "frame": ""
+      },
+      "name": "Humor",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Horror",
+        "frame": ""
+      },
+      "name": "Horror",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "History",
+        "frame": ""
+      },
+      "name": "History",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Food and Drink",
+        "frame": ""
+      },
+      "name": "Food and Drink",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Christian Fiction",
+        "frame": ""
+      },
+      "name": "Christian Fiction",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Business",
+        "frame": ""
+      },
+      "name": "Business",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Biography",
+        "frame": ""
+      },
+      "name": "Biography",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Thriller",
+        "frame": ""
+      },
+      "name": "Thriller",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Contemporary",
+        "frame": ""
+      },
+      "name": "Contemporary",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Spirituality",
+        "frame": ""
+      },
+      "name": "Spirituality",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Academic",
+        "frame": ""
+      },
+      "name": "Academic",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Self Help",
+        "frame": ""
+      },
+      "name": "Self Help",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Historical",
+        "frame": ""
+      },
+      "name": "Historical",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Christian",
+        "frame": ""
+      },
+      "name": "Christian",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Suspense",
+        "frame": ""
+      },
+      "name": "Suspense",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Short Stories",
+        "frame": ""
+      },
+      "name": "Short Stories",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Novels",
+        "frame": ""
+      },
+      "name": "Novels",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Health",
+        "frame": ""
+      },
+      "name": "Health",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Politics",
+        "frame": ""
+      },
+      "name": "Politics",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Cultural",
+        "frame": ""
+      },
+      "name": "Cultural",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Erotica",
+        "frame": ""
+      },
+      "name": "Erotica",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "link",
+        "name": "Crime",
+        "frame": ""
+      },
+      "name": "Crime",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "css",
+        "name": "a",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "title",
+        "name": "A Light in the Attic",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "A Light in the ...",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "button",
+        "name": "Add to basket",
+        "frame": ""
+      },
+      "name": "Add to basket",
+      "role": "button",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "css",
+        "name": "a",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "title",
+        "name": "The Black Maria",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "The Black Maria",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "button",
+        "name": "Add to basket",
+        "frame": ""
+      },
+      "name": "Add to basket",
+      "role": "button",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "css",
+        "name": "a",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "title",
+        "name": "Shakespeare's Sonnets",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "Shakespeare's Sonnets",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "button",
+        "name": "Add to basket",
+        "frame": ""
+      },
+      "name": "Add to basket",
+      "role": "button",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "css",
+        "name": "a",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "title",
+        "name": "Olio",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "Olio",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "button",
+        "name": "Add to basket",
+        "frame": ""
+      },
+      "name": "Add to basket",
+      "role": "button",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "css",
+        "name": "a",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "title",
+        "name": "You can't bury them all: Poems",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "You can't bury them ...",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "button",
+        "name": "Add to basket",
+        "frame": ""
+      },
+      "name": "Add to basket",
+      "role": "button",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "css",
+        "name": "a",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "title",
+        "name": "Slow States of Collapse: Poems",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "Slow States of Collapse: ...",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "button",
+        "name": "Add to basket",
+        "frame": ""
+      },
+      "name": "Add to basket",
+      "role": "button",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "css",
+        "name": "a",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "title",
+        "name": "Untitled Collection: Sabbath Poems 2014",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "Untitled Collection: Sabbath Poems ...",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "button",
+        "name": "Add to basket",
+        "frame": ""
+      },
+      "name": "Add to basket",
+      "role": "button",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "css",
+        "name": "a",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "title",
+        "name": "Poems That Make Grown Women Cry",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "Poems That Make Grown ...",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "button",
+        "name": "Add to basket",
+        "frame": ""
+      },
+      "name": "Add to basket",
+      "role": "button",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "css",
+        "name": "a",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "title",
+        "name": "Night Sky with Exit Wounds",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "Night Sky with Exit ...",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "button",
+        "name": "Add to basket",
+        "frame": ""
+      },
+      "name": "Add to basket",
+      "role": "button",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "css",
+        "name": "a",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "title",
+        "name": "salt.",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "salt.",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "button",
+        "name": "Add to basket",
+        "frame": ""
+      },
+      "name": "Add to basket",
+      "role": "button",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "css",
+        "name": "a",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "title",
+        "name": "Quarter Life Poetry: Poems for the Young, Broke and Hangry",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "Quarter Life Poetry: Poems ...",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "button",
+        "name": "Add to basket",
+        "frame": ""
+      },
+      "name": "Add to basket",
+      "role": "button",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "css",
+        "name": "a",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "title",
+        "name": "Out of Print: City Lights Spotlight No. 14",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "Out of Print: City ...",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "button",
+        "name": "Add to basket",
+        "frame": ""
+      },
+      "name": "Add to basket",
+      "role": "button",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "css",
+        "name": "a",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "title",
+        "name": "Les Fleurs du Mal",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "Les Fleurs du Mal",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "button",
+        "name": "Add to basket",
+        "frame": ""
+      },
+      "name": "Add to basket",
+      "role": "button",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "css",
+        "name": "a",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "title",
+        "name": "Howl and Other Poems",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "Howl and Other Poems",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "button",
+        "name": "Add to basket",
+        "frame": ""
+      },
+      "name": "Add to basket",
+      "role": "button",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "css",
+        "name": "a",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "title",
+        "name": "Leave This Song Behind: Teen Poetry at Its Best",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "Leave This Song Behind: ...",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "button",
+        "name": "Add to basket",
+        "frame": ""
+      },
+      "name": "Add to basket",
+      "role": "button",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "css",
+        "name": "a",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "title",
+        "name": "The Collected Poems of W.B. Yeats (The Collected Works of W.B. Yeats #1)",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "The Collected Poems of ...",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "button",
+        "name": "Add to basket",
+        "frame": ""
+      },
+      "name": "Add to basket",
+      "role": "button",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "css",
+        "name": "a",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "title",
+        "name": "The Crossover",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "The Crossover",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "button",
+        "name": "Add to basket",
+        "frame": ""
+      },
+      "name": "Add to basket",
+      "role": "button",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "css",
+        "name": "a",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "title",
+        "name": "Booked",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "Booked",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "button",
+        "name": "Add to basket",
+        "frame": ""
+      },
+      "name": "Add to basket",
+      "role": "button",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "css",
+        "name": "a",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "title",
+        "name": "Twenty Love Poems and a Song of Despair",
+        "role": "link",
+        "frame": ""
+      },
+      "name": "Twenty Love Poems and ...",
+      "role": "link",
+      "row": null,
+      "options": null
+    },
+    {
+      "target": {
+        "by": "role",
+        "role": "button",
+        "name": "Add to basket",
+        "frame": ""
+      },
+      "name": "Add to basket",
+      "role": "button",
+      "row": null,
+      "options": null
+    }
+  ],
+  "tables": [],
+  "frames": [
+    ""
+  ],
+  "dialog": false,
+  "loading": false,
+  "text": "\n Books to Scrape We love being scraped! Home Books Poetry Books Travel Mystery Historical Fiction Sequential Art Classics Philosophy Romance Womens Fiction Fiction Childrens Religion Nonfiction Music Default Science Fiction Sports and Games Add a comment Fantasy New Adult Young Adult Science Poetry Paranormal Art Psychology Autobiography Parenting Adult Fiction Humor Horror History Food and Drink Christian Fiction Business Biography Thriller Contemporary Spirituality Academic Self Help Historical Christian Suspense Short Stories Novels Health Politics Cultural Erotica Crime Poetry 19 results. Warning! This is a demo website for web scraping purposes. Prices and ratings here were randomly assigned and have no real meaning. A Light in the ... \u00a351.77 In stock Add to basket The Black Maria \u00a352.15 In stock Add to basket Shakespeare's Sonnets \u00a320.66 In stock Add to basket Olio \u00a323.88 In stock Add to basket You can't bury them ... \u00a333.63 In stock Add to basket Slow States of Collapse: ... \u00a357.31 In stock Add to basket Untitled Collection: Sabbath Poems ... \u00a314.27 In stock Add to basket Poems That Make Grown ... \u00a314.19 In stock Add to basket Night Sky with Exit ... \u00a341.05 In stock Add to basket salt. \u00a346.78 In stock Add to basket Quarter Life Poetry: Poems ... \u00a350.89 In stock Add to basket Out of Print: City ... \u00a353.64 In stock Add to basket Les Fleurs du Mal \u00a329.04 In stock Add to basket Howl and Other Poems \u00a340.45 In stock Add to basket Leave This Song Behind: ... \u00a351.17 In stock Add to basket The Collected Poems of ... \u00a315.42 In stock Add to basket The Crossover \u00a338.77 In stock Add to basket Booked \u00a317.49 In stock Add to basket Twenty Love Poems and ... \u00a330.95 In stock Add to basket ",
+  "structure": "\nFRAME main\na Books to Scrape\na Home\na Books\na Books\na Travel\na Mystery\na Historical Fiction\na Sequential Art\na Classics\na Philosophy\na Romance\na Womens Fiction\na Fiction\na Childrens\na Religion\na Nonfiction\na Music\na Default\na Science Fiction\na Sports and Games\na Add a comment\na Fantasy\na New Adult\na Young Adult\na Science\na Poetry\nstrong Poetry\na Paranormal\na Art\na Psychology\na Autobiography\na Parenting\na Adult Fiction\na Humor\na Horror\na History\na Food and Drink\na Christian Fiction\na Business\na Biography\na Thriller\na Contemporary\na Spirituality\na Academic\na Self Help\na Historical\na Christian\na Suspense\na Short Stories\na Novels\na Health\na Politics\na Cultural\na Erotica\na Crime\nh1 Poetry\nstrong 19\nsection Warning! This is a demo website for web scraping purposes. Prices and ratings here were randomly assigned and have no real meaning.\n\n    \n\nA Light in the ...\n\n\u00a3\nstrong Warning!\narticle.product_pod \na \np.star-rating.Three \nh3 A Light in the ...\na A Light in the ...\np.price_color \u00a351.77\np.instock.availability In stock\narticle.product_pod \na \np.star-rating.One \nh3 The Black Maria\na The Black Maria\np.price_color \u00a352.15\np.instock.availability In stock\narticle.product_pod \na \np.star-rating.Four \nh3 Shakespeare's Sonnets\na Shakespeare's Sonnets\np.price_color \u00a320.66\np.instock.availability In stock\narticle.product_pod \na \np.star-rating.One \nh3 Olio\na Olio\np.price_color \u00a323.88\np.instock.availability In stock\narticle.product_pod \na \np.star-rating.Two \nh3 You can't bury them ...\na You can't bury them ...\np.price_color \u00a333.63\np.instock.availability In stock\narticle.product_pod \na \np.star-rating.Three \nh3 Slow States of Collapse: ...\na Slow States of Collapse: ...\np.price_color \u00a357.31\np.instock.availability In stock\narticle.product_pod \na \np.star-rating.Four \nh3 Untitled Collection: Sabbath Poems ...\na Untitled Collection: Sabbath Poems ...\np.price_color \u00a314.27\np.instock.availability In stock\narticle.product_pod \na \np.star-rating.Four \nh3 Poems That Make Grown ...\na Poems That Make Grown ...\np.price_color \u00a314.19\np.instock.availability In stock\narticle.product_pod \na \np.star-rating.One \nh3 Night Sky with Exit ...\na Night Sky with Exit ...\np.price_color \u00a341.05\np.instock.availability In stock\narticle.product_pod \na \np.star-rating.Four \nh3 salt.\na salt.\np.price_color \u00a346.78\np.instock.availability In stock\narticle.product_pod \na \np.star-rating.Five \nh3 Quarter Life Poetry: Poems ...\na Quarter Life Poetry: Poems ...\np.price_color \u00a350.89\np.instock.availability In stock\narticle.product_pod \na \np.star-rating.Five \nh3 Out of Print: City ...\na Out of Print: City ...\np.price_color \u00a353.64\np.instock.availability In stock\narticle.product_pod \na \np.star-rating.Five \nh3 Les Fleurs du Mal\na Les Fleurs du Mal\np.price_color \u00a329.04\np.instock.availability In stock\narticle.product_pod \na \np.star-rating.Two \nh3 Howl and Other Poems\na Howl and Other Poems\np.price_color \u00a340.45\np.instock.availability In stock\narticle.product_pod \na \np.star-rating.Five \nh3 Leave This Song Behind: ...\na Leave This Song Behind: ...\np.price_color \u00a351.17\np.instock.availability In stock\narticle.product_pod \na \np.star-rating.Five \nh3 The Collected Poems of ...\na The Collected Poems of ...\np.price_color \u00a315.42\np.instock.availability In stock\narticle.product_pod \na \np.star-rating.Four \nh3 The Crossover\na The Crossover\np.price_color \u00a338.77\np.instock.availability In stock\narticle.product_pod \na \np.star-rating.Five \nh3 Booked\na Booked\np.price_color \u00a317.49\np.instock.availability In stock\narticle.product_pod \na \np.star-rating.Four \nh3 Twenty Love Poems and ...\na Twenty Love Poems and ...\np.price_color \u00a330.95\np.instock.availability In stock"
+}

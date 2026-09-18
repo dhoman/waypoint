@@ -1,0 +1,23 @@
+{
+  "status": "succeeded",
+  "run_id": "web-member-discovery-6-eb513950",
+  "capability_id": "web-ee0745d3eb",
+  "revision": 1,
+  "outputs": {
+    "member_id": "M-101",
+    "invoice_rows": [
+      {
+        "invoice": "INV-1011",
+        "amount_usd": 120.0,
+        "status": "Paid"
+      },
+      {
+        "invoice": "INV-1012",
+        "amount_usd": 45.5,
+        "status": "Overdue"
+      }
+    ],
+    "total_amount_usd": 165.5
+  },
+  "kind": "genuine_discovery"
+}

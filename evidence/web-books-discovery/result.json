@@ -1,0 +1,9 @@
+{
+  "status": "failed",
+  "reason": "KeyError",
+  "failure_category": "KeyError",
+  "evidence": [
+    "failure.json",
+    "failure.png"
+  ]
+}

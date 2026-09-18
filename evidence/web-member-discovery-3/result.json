@@ -1,0 +1,9 @@
+{
+  "status": "failed",
+  "reason": "no_progress",
+  "failure_category": "no_progress",
+  "evidence": [
+    "failure.json",
+    "failure.png"
+  ]
+}

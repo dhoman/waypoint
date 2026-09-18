@@ -1,8 +1,15 @@
 # Waypoint
 
 Discover one UI capability with an LLM, compile its observed route, then replay
-with different inputs **without model access**. This take-home uses a synthetic
-legacy member console, a real iframe, ordinary forms/tables, and fake data.
+with different inputs **without model access**. Point discovery at a website with
+a URL, a natural-language goal and named inputs. The default version-2 path learns
+screen rules, locators, parameter bindings and output extraction from the live UI;
+there is no application registry or per-site Python module to write.
+
+Real public-site evidence: discovery opened the Travel category on Books to
+Scrape, then strict replay opened Poetry and returned Poetry's displayed books.
+The same generic adapter is tested against an unrelated parts catalog. The
+original member-console demo and version-1 artifacts remain supported below.
 
 The saved LLM run navigated member M-101's invoices ($165.50). Strict replay read
 M-202's different invoices ($100.00). A headed run paused for an unexpected
@@ -35,7 +42,64 @@ and the actual API. The provider uses
 [Responses structured output](https://developers.openai.com/api/docs/guides/structured-outputs),
 `store=False`, and no provider retry. There is no hardcoded runtime model default.
 
-## One path from discovery to inspection
+## Test a website: discovery → replay → inspection
+
+Use a site you are authorized to automate. This public scraping-practice site
+provides a small reproducible example (each output directory must be new):
+
+```sh
+uv run --no-sync waypoint discover \
+  --url https://books.toscrape.com/ \
+  --goal 'Open the category named by category and return the first three book titles and prices displayed in that category.' \
+  --input category=Travel --model gpt-5.4-mini --headed \
+  --out runs/books-discovery
+
+uv run --no-sync python -m waypoint.strict replay \
+  --artifact runs/books-discovery/capability.json \
+  --input category=Poetry --headed --out runs/books-replay
+
+uv run --no-sync waypoint inspect \
+  --artifact runs/books-discovery/capability.json \
+  --runs runs/books-replay --out runs/books-inspector.html
+```
+
+Open `runs/books-inspector.html`. Results are in each run's `result.json`.
+For a model-free quick test, replace the artifact argument with
+`evidence/web-books-discovery-5/capability.json` and skip discovery.
+
+For **your site**, replace the URL and goal, and supply as many `--input NAME=VALUE`
+arguments as the task needs. Inputs are scalar strings, JSON numbers or booleans;
+the artifact requires exactly those names and types during replay. No selectors,
+screen catalog or output schema must be coded first. Discover a separate capability
+for each workflow/site; a bookstore artifact is not a universal website script.
+
+Authentication and permissions are runtime configuration, not application code:
+
+- `--headed --prepare`: manually sign in/prepare the same browser, then press
+  Enter in the terminal. Browser storage is not saved. Repeat for each fresh run.
+- `--allow-origin https://login.example.com`: explicitly authorize an additional
+  frame/navigation/API origin. Popups are currently blocked.
+- `--allow-method POST`: authorize requests needed by a trusted app or login.
+  This grants that method across allowed origins; use narrowly and cautiously.
+- `--allow-control 'Exact visible label'`: explicitly authorize an otherwise
+  unclassified control. Do not grant consequential permissions casually.
+- `--headed --interactive` on replay: keep the same session open for takeover
+  if an unknown screen blocks the run; use `take TOKEN`, then `resume TOKEN`.
+
+**Generic does not mean guaranteed on every page.** DOM-based forms, links,
+tables, lists and named iframes are supported. CAPTCHA, canvas-only controls,
+unnamed frames, pop-up login and complex shadow-DOM apps may need adapter-level
+improvements or manual steps. Discovery proposals can be wrong; inspect and
+validate the draft with different inputs. Three unchanged observations or a
+deadline stops discovery. Replay never calls a model to compensate for drift.
+Missing-record branches are not inferred from a happy path: they require a
+separately observed/reviewed artifact amendment, not an engine code change.
+
+Use public/synthetic data for now: UI content goes to the configured model, and
+visible text/screenshots are retained locally. Form masking is **not** general
+PII removal. Do not run this prototype on sensitive production data.
+
+## Original member-console acceptance demo (version 1 compatibility)
 
 Start the application in terminal 1:
 
@@ -154,28 +218,31 @@ discovery evidence. TDD was used incrementally after the initial schema scaffold
 
 | Module | Responsibility |
 |---|---|
-| `schema.py` | Versioned artifact, typed predicates/actions, graph validation |
-| `surface.py`, `browser.py`, `policy.py` | Async session, structural resolution, allowlist and evidence |
-| `discovery.py`, `provider.py`, `compiler.py` | Constrained LLM loop and deterministic route compilation |
-| `recognition.py`, `engine.py`, `delivery.py` | Model-free interpretation, checks, outcomes and uncertainty |
+| `web/schema.py` | Generic version-2 artifact, predicates/actions, graph validation |
+| `web/browser.py`, `web/observe.js`, `web/policy.py` | Generic session, observation, targeting and permissions |
+| `web/discovery.py`, `provider.py`, `web/compiler.py` | LLM discovery and declarative route compilation |
+| `web/interpret.py`, `web/runtime.py`, `delivery.py` | Model-free recognition, extraction, replay and uncertainty |
+| Root `schema.py`, `browser.py`, `engine.py`, `compiler.py` | Legacy version-1 member-console compatibility |
 | `ownership.py`, `evidence.py` | Transfer protocol, correlated trace and capture boundary |
 | `inspector.py`, `inspector.html` | Local read-only graph/run inspection |
 | `qualification.py` | Evidence annotations with artifact-digest and coverage checks |
 | `fixture.py` | Developer-owned synthetic application; not an agent tool |
 
-This is one bounded browser capability, not a general route planner. Logical
-screen types are reused; identity is separately bound to mandatory `memberId`.
+Each discovery produces one bounded browser capability, not a global route planner.
+Logical screen types are reused; identity is bound to the workflow's named inputs.
 Action retries are disabled (only `retries: 0` is admitted); modeled recovery is
 a bounded wait for visible loading. No generic Back/reset or model self-healing.
 The main flow is read-only. A synthetic unit test covers uncertain-write refusal;
 there is no financial transaction implementation.
 
-The allowlist admits only the configured loopback origin, fixed app routes, GET
-requests, a specific search field/form, and qualified navigation controls.
-Redirect requests, frames and popups are checked/blocked. It does not prove that
-arbitrary JavaScript or GET handlers on a malicious allowed app are harmless.
-Only the trusted synthetic-local app profile is supported. Screenshots mask form
-values; visible fixture identities remain fake and are intentionally inspectable.
+The generic policy allows the selected origin, GET/HEAD/OPTIONS requests,
+structural reads, form input and recognizable navigation/search controls.
+Additional origins/methods/control labels require explicit runtime permissions.
+Passive scripts/images/styles may load cross-origin; document/API requests and
+frames are constrained. Popups are blocked. This is a conservative semantic
+heuristic, not proof that JavaScript or GET handlers cannot mutate business data.
+The legacy path retains its tighter fixture-specific allowlist. Screenshots mask
+form values, but other visible page data remains inspectable.
 This is **not production PII redaction**, tenant isolation, or a security sandbox.
 
 [REPORT.md](REPORT.md) describes the design and cuts.

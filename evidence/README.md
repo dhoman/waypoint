@@ -1,7 +1,8 @@
 # Retained execution evidence
 
-All run directories here contain **actual local browser executions with fake
-application data**. There are no fabricated provider traces in this directory.
+All run directories here contain **actual browser executions**, using fake
+application data or the public Books to Scrape practice catalog. There are no
+fabricated provider traces in this directory.
 Authored routes and synthetic providers exist only in `tests/` and temporary
 pytest output. One example of each exception is not a reliability estimate.
 
@@ -10,6 +11,68 @@ outcomes, filtered snapshots and screenshots. Select `identity-mismatch` for a
 hard stop or `handoff` for the manual intervention history.
 
 ## Inventory
+
+### Generic website implementation (schema 2)
+
+Open [web-inspector.html](web-inspector.html) for the public-site success/failure
+overlays. The new default engine contains no bookstore or member-console route,
+selector, output-field or screen-name configuration. Site knowledge below came
+from model decisions and live UI validation, then became artifact data.
+
+| Directory | Actual result |
+|---|---|
+| `web-books-discovery-5` | Genuine discovery: Travel link chosen; generic category screen and list extraction learned |
+| `web-books-replay-5` | Strict Poetry replay succeeded, returning its first three displayed titles/prices |
+| `web-books-missing` | Nonexistent category refused before click; structured failure plus screenshot/snapshot |
+| `web-member-discovery-6` | Generic URL/goal discovery: four UI actions through the iframe, typed invoice extraction, total 165.50 |
+| `web-member-replay` | Strict generic replay for M-202, actual rows 84.25 and 15.75, total 100.00 |
+
+The bookstore artifact preserves displayed truncated titles and currency strings;
+it does not claim full-title or numeric-price normalization. The member artifact
+uses numeric invoice amounts. Both are drafts, not globally approved workflows.
+The missing category is an unmodeled target failure, not an inferred business
+outcome. The legacy missing-member artifact below has an explicitly authored one.
+
+Earlier real development attempts are retained, **not counted as successes**:
+`web-books-discovery` and `-2` stopped on invalid input references; `-3` discovered
+a route but its `web-books-replay-3` paused on an overfitted result-count rule;
+`-4` rejected an extraction target. `web-member-discovery` through `-5` exposed
+bad locator/identity proposals, no progress, and an iframe navigation race.
+The final generic loop feeds rejected pre-action proposals back with bounded
+steps, and the shared adapter has an iframe regression test. No replay failure
+was repaired by calling a model or rewriting its active artifact.
+
+Commands for the successful pairs (the fixture used port 8770):
+
+```sh
+.venv/bin/python -m waypoint.cli discover --url https://books.toscrape.com/ --goal 'Open the category named by category and return the first three book titles and prices displayed in that category.' --input category=Travel --model gpt-5.4-mini --out evidence/web-books-discovery-5
+.venv/bin/python -m waypoint.strict replay --artifact evidence/web-books-discovery-5/capability.json --input category=Poetry --out evidence/web-books-replay-5
+.venv/bin/python -m waypoint.strict replay --artifact evidence/web-books-discovery-5/capability.json --input category=Nonexistent --out evidence/web-books-missing
+.venv/bin/python -m waypoint.cli fixture --port 8770
+.venv/bin/python -m waypoint.cli discover --url http://127.0.0.1:8770/ --goal 'Find the member specified by memberId, inspect their profile, open their invoices and return their member ID and invoice rows with numeric amounts and a total.' --input memberId=M-101 --model gpt-5.4-mini --out evidence/web-member-discovery-6
+.venv/bin/python -m waypoint.strict replay --artifact evidence/web-member-discovery-6/capability.json --input memberId=M-202 --out evidence/web-member-replay
+.venv/bin/python -m waypoint.cli inspect --artifact evidence/web-books-discovery-5/capability.json --runs evidence/web-books-replay-5 evidence/web-books-missing --out evidence/web-inspector.html
+```
+
+Code milestones: `7949cf9` introduced the generic adapter/artifact/interpreter;
+`0d166d6` committed generic discovery and the default CLI. These development runs
+preceded the latter commit and carry exact source hashes in `run_started`, not
+claims of running that identical commit. Generic-era hashes include recursively
+all Python, HTML and JavaScript source under `waypoint/`; old hashes covered only
+root Python/HTML. Dependencies/host/provider configuration remain as listed below.
+Credentials were read only from the environment. Browser permission defaults:
+the selected origin, GET/HEAD/OPTIONS, no additional authorized control labels.
+
+Generic takeover is browser-tested with a **simulated operator**: automation
+blocked during human ownership, dialog resume rejected, click captured, same-page
+checkpoint accepted, stale token refused. This is not another physical-human
+recording. The original headed handoff evidence is preserved below. Generic
+inspector node/edge selection and rich failure evidence were exercised in Chromium;
+`web-inspector-preview.png` was visually reviewed. Public-site sample size is one
+successful discovery/replay pair after development attempts, not a reliability
+measurement. New generic tests plus the original suite: 36 tests.
+
+### Original member-console implementation (schema 1)
 
 | Directory/file | Evidence |
 |---|---|

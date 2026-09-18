@@ -1,0 +1,448 @@
+{
+  "schema_version": "2.0",
+  "capability_id": "web-ee0745d3eb",
+  "revision": 1,
+  "description": "Find the member specified by memberId, inspect their profile, open their invoices and return their member ID and invoice rows with numeric amounts and a total.",
+  "surface": "browser",
+  "app": "Member Console",
+  "app_version": "unasserted",
+  "origin": "http://127.0.0.1:8770",
+  "entry_path": "/",
+  "required_inputs": {
+    "memberId": "string"
+  },
+  "output": [
+    {
+      "name": "member_id",
+      "source": "field",
+      "field": "Member ID",
+      "target": null,
+      "attribute": "text",
+      "value_type": "string",
+      "columns": [],
+      "limit": 1
+    },
+    {
+      "name": "invoice_rows",
+      "source": "table",
+      "field": "Invoice ledger",
+      "target": null,
+      "attribute": "text",
+      "value_type": "string",
+      "columns": [
+        {
+          "name": "invoice",
+          "target": null,
+          "field": "Invoice",
+          "attribute": "text",
+          "value_type": "string"
+        },
+        {
+          "name": "amount_usd",
+          "target": null,
+          "field": "Amount USD",
+          "attribute": "text",
+          "value_type": "number"
+        },
+        {
+          "name": "status",
+          "target": null,
+          "field": "Status",
+          "attribute": "text",
+          "value_type": "string"
+        }
+      ],
+      "limit": 2
+    },
+    {
+      "name": "total_amount_usd",
+      "source": "sum",
+      "field": "invoice_rows.amount_usd",
+      "target": null,
+      "attribute": "text",
+      "value_type": "number",
+      "columns": [],
+      "limit": 1
+    }
+  ],
+  "entry": "s0",
+  "screens": {
+    "member_search": {
+      "id": "member_search",
+      "recognition": [
+        {
+          "op": "heading",
+          "value": "Member search",
+          "field": "",
+          "input": null,
+          "target": null
+        }
+      ],
+      "identity": [],
+      "provenance": {
+        "origin": "discovered",
+        "note": "Proposed from observed UI; replay validation pending",
+        "evidence": [
+          "web-member-discovery-6-eb513950/events.jsonl"
+        ],
+        "validated": false
+      }
+    },
+    "member_search_results": {
+      "id": "member_search_results",
+      "recognition": [
+        {
+          "op": "heading",
+          "value": "Search results",
+          "field": "",
+          "input": null,
+          "target": null
+        }
+      ],
+      "identity": [
+        {
+          "op": "field_equals_input",
+          "value": "",
+          "field": "Search ID",
+          "input": "memberId",
+          "target": null
+        },
+        {
+          "op": "field_equals_input",
+          "value": "Search ID",
+          "field": "Search ID",
+          "input": "memberId",
+          "target": null
+        }
+      ],
+      "provenance": {
+        "origin": "discovered",
+        "note": "Proposed from observed UI; replay validation pending",
+        "evidence": [
+          "web-member-discovery-6-eb513950/events.jsonl"
+        ],
+        "validated": false
+      }
+    },
+    "member_profile": {
+      "id": "member_profile",
+      "recognition": [
+        {
+          "op": "heading",
+          "value": "Member profile",
+          "field": "",
+          "input": null,
+          "target": null
+        }
+      ],
+      "identity": [
+        {
+          "op": "field_equals_input",
+          "value": "",
+          "field": "Member ID",
+          "input": "memberId",
+          "target": null
+        },
+        {
+          "op": "field_equals_input",
+          "value": "Member ID",
+          "field": "Member ID",
+          "input": "memberId",
+          "target": null
+        }
+      ],
+      "provenance": {
+        "origin": "discovered",
+        "note": "Proposed from observed UI; replay validation pending",
+        "evidence": [
+          "web-member-discovery-6-eb513950/events.jsonl"
+        ],
+        "validated": false
+      }
+    },
+    "member_invoices": {
+      "id": "member_invoices",
+      "recognition": [
+        {
+          "op": "heading",
+          "value": "Member invoices",
+          "field": "",
+          "input": null,
+          "target": null
+        }
+      ],
+      "identity": [
+        {
+          "op": "field_equals_input",
+          "value": "",
+          "field": "Member ID",
+          "input": "memberId",
+          "target": null
+        },
+        {
+          "op": "field_equals_input",
+          "value": "Member ID",
+          "field": "Member ID",
+          "input": "memberId",
+          "target": null
+        }
+      ],
+      "provenance": {
+        "origin": "discovered",
+        "note": "Proposed from observed UI; replay validation pending",
+        "evidence": [
+          "web-member-discovery-6-eb513950/events.jsonl"
+        ],
+        "validated": false
+      }
+    }
+  },
+  "states": {
+    "s0": {
+      "id": "s0",
+      "screen": "member_search",
+      "progress": "before_action_0",
+      "outcome": null,
+      "checkpoint": false
+    },
+    "s1": {
+      "id": "s1",
+      "screen": "member_search",
+      "progress": "before_action_1",
+      "outcome": null,
+      "checkpoint": false
+    },
+    "s2": {
+      "id": "s2",
+      "screen": "member_search_results",
+      "progress": "before_action_2",
+      "outcome": null,
+      "checkpoint": true
+    },
+    "s3": {
+      "id": "s3",
+      "screen": "member_profile",
+      "progress": "before_action_3",
+      "outcome": null,
+      "checkpoint": true
+    },
+    "s4": {
+      "id": "s4",
+      "screen": "member_invoices",
+      "progress": "before_action_4",
+      "outcome": null,
+      "checkpoint": true
+    },
+    "done": {
+      "id": "done",
+      "screen": null,
+      "progress": "terminal",
+      "outcome": "succeeded",
+      "checkpoint": false
+    }
+  },
+  "transitions": [
+    {
+      "id": "t0",
+      "source": "s0",
+      "destination": "s1",
+      "action": {
+        "kind": "fill",
+        "target": {
+          "kind": "browser",
+          "by": "label",
+          "name": "Member ID",
+          "role": "textbox",
+          "frame": "Member workspace",
+          "name_input": null,
+          "row_input": null
+        },
+        "input": "memberId",
+        "value": null
+      },
+      "guards": [],
+      "postconditions": [],
+      "timeout_s": 10,
+      "risk": "read",
+      "retries": 0,
+      "alternatives": {},
+      "provenance": {
+        "origin": "discovered",
+        "note": "Observed action; no inferred reverse edge",
+        "evidence": [],
+        "validated": false
+      }
+    },
+    {
+      "id": "t1",
+      "source": "s1",
+      "destination": "s2",
+      "action": {
+        "kind": "click",
+        "target": {
+          "kind": "browser",
+          "by": "role",
+          "name": "Search",
+          "role": "button",
+          "frame": "Member workspace",
+          "name_input": null,
+          "row_input": null
+        },
+        "input": null,
+        "value": null
+      },
+      "guards": [],
+      "postconditions": [],
+      "timeout_s": 10,
+      "risk": "navigation",
+      "retries": 0,
+      "alternatives": {},
+      "provenance": {
+        "origin": "discovered",
+        "note": "Observed action; no inferred reverse edge",
+        "evidence": [],
+        "validated": false
+      }
+    },
+    {
+      "id": "t2",
+      "source": "s2",
+      "destination": "s3",
+      "action": {
+        "kind": "click",
+        "target": {
+          "kind": "browser",
+          "by": "role",
+          "name": "View profile",
+          "role": "link",
+          "frame": "Member workspace",
+          "name_input": null,
+          "row_input": "memberId"
+        },
+        "input": null,
+        "value": null
+      },
+      "guards": [
+        {
+          "op": "field_equals_input",
+          "value": "",
+          "field": "Search ID",
+          "input": "memberId",
+          "target": null
+        },
+        {
+          "op": "field_equals_input",
+          "value": "Search ID",
+          "field": "Search ID",
+          "input": "memberId",
+          "target": null
+        }
+      ],
+      "postconditions": [],
+      "timeout_s": 10,
+      "risk": "navigation",
+      "retries": 0,
+      "alternatives": {},
+      "provenance": {
+        "origin": "discovered",
+        "note": "Observed action; no inferred reverse edge",
+        "evidence": [],
+        "validated": false
+      }
+    },
+    {
+      "id": "t3",
+      "source": "s3",
+      "destination": "s4",
+      "action": {
+        "kind": "click",
+        "target": {
+          "kind": "browser",
+          "by": "role",
+          "name": "Invoices",
+          "role": "link",
+          "frame": "Member workspace",
+          "name_input": null,
+          "row_input": null
+        },
+        "input": null,
+        "value": null
+      },
+      "guards": [
+        {
+          "op": "field_equals_input",
+          "value": "",
+          "field": "Member ID",
+          "input": "memberId",
+          "target": null
+        },
+        {
+          "op": "field_equals_input",
+          "value": "Member ID",
+          "field": "Member ID",
+          "input": "memberId",
+          "target": null
+        }
+      ],
+      "postconditions": [],
+      "timeout_s": 10,
+      "risk": "navigation",
+      "retries": 0,
+      "alternatives": {},
+      "provenance": {
+        "origin": "discovered",
+        "note": "Observed action; no inferred reverse edge",
+        "evidence": [],
+        "validated": false
+      }
+    },
+    {
+      "id": "t4",
+      "source": "s4",
+      "destination": "done",
+      "action": {
+        "kind": "extract",
+        "target": null,
+        "input": null,
+        "value": null
+      },
+      "guards": [
+        {
+          "op": "field_equals_input",
+          "value": "",
+          "field": "Member ID",
+          "input": "memberId",
+          "target": null
+        },
+        {
+          "op": "field_equals_input",
+          "value": "Member ID",
+          "field": "Member ID",
+          "input": "memberId",
+          "target": null
+        }
+      ],
+      "postconditions": [],
+      "timeout_s": 10,
+      "risk": "read",
+      "retries": 0,
+      "alternatives": {},
+      "provenance": {
+        "origin": "discovered",
+        "note": "Observed action; no inferred reverse edge",
+        "evidence": [],
+        "validated": false
+      }
+    }
+  ],
+  "terminals": [
+    "done"
+  ],
+  "max_steps": 40,
+  "discovery_run": "web-member-discovery-6-eb513950",
+  "provider": "openai",
+  "model": "gpt-5.4-mini",
+  "compiler": "waypoint-web-2",
+  "status": "draft",
+  "validation_evidence": []
+}

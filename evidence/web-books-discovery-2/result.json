@@ -1,0 +1,9 @@
+{
+  "status": "failed",
+  "reason": "unknown predicate input",
+  "failure_category": "unknown predicate input",
+  "evidence": [
+    "failure.json",
+    "failure.png"
+  ]
+}

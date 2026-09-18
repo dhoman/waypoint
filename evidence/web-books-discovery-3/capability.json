@@ -1,0 +1,232 @@
+{
+  "schema_version": "2.0",
+  "capability_id": "web-fd5451c60d",
+  "revision": 1,
+  "description": "Open the category named by category and return the first three book titles and prices displayed in that category.",
+  "surface": "browser",
+  "app": "All products | Books to Scrape - Sandbox",
+  "app_version": "unasserted",
+  "origin": "https://books.toscrape.com",
+  "entry_path": "/",
+  "required_inputs": {
+    "category": "string"
+  },
+  "output": [
+    {
+      "name": "book_titles",
+      "source": "list",
+      "field": "",
+      "target": {
+        "kind": "browser",
+        "by": "css",
+        "name": "article.product_pod",
+        "role": "link",
+        "frame": "",
+        "name_input": null,
+        "row_input": null
+      },
+      "attribute": "title",
+      "value_type": "string",
+      "columns": [
+        {
+          "name": "title",
+          "target": {
+            "kind": "browser",
+            "by": "css",
+            "name": "h3 a",
+            "role": "link",
+            "frame": "",
+            "name_input": null,
+            "row_input": null
+          },
+          "field": "",
+          "attribute": "title",
+          "value_type": "string"
+        }
+      ],
+      "limit": 3
+    },
+    {
+      "name": "book_prices",
+      "source": "list",
+      "field": "",
+      "target": {
+        "kind": "browser",
+        "by": "css",
+        "name": "article.product_pod",
+        "role": "link",
+        "frame": "",
+        "name_input": null,
+        "row_input": null
+      },
+      "attribute": "text",
+      "value_type": "string",
+      "columns": [
+        {
+          "name": "price",
+          "target": {
+            "kind": "browser",
+            "by": "css",
+            "name": "p.price_color",
+            "role": "text",
+            "frame": "",
+            "name_input": null,
+            "row_input": null
+          },
+          "field": "",
+          "attribute": "text",
+          "value_type": "string"
+        }
+      ],
+      "limit": 3
+    }
+  ],
+  "entry": "s0",
+  "screens": {
+    "books_category_home": {
+      "id": "books_category_home",
+      "recognition": [
+        {
+          "op": "heading",
+          "value": "All products",
+          "field": "",
+          "input": null,
+          "target": null
+        },
+        {
+          "op": "text_present",
+          "value": "Travel",
+          "field": "",
+          "input": null,
+          "target": null
+        }
+      ],
+      "identity": [],
+      "provenance": {
+        "origin": "discovered",
+        "note": "Proposed from observed UI; replay validation pending",
+        "evidence": [
+          "web-books-discovery-3-d3b03242/events.jsonl"
+        ],
+        "validated": false
+      }
+    },
+    "category-travel-books-list": {
+      "id": "category-travel-books-list",
+      "recognition": [
+        {
+          "op": "heading_input",
+          "value": "",
+          "field": "",
+          "input": "category",
+          "target": null
+        },
+        {
+          "op": "text_present",
+          "value": "11 results.",
+          "field": "",
+          "input": null,
+          "target": null
+        }
+      ],
+      "identity": [],
+      "provenance": {
+        "origin": "discovered",
+        "note": "Proposed from observed UI; replay validation pending",
+        "evidence": [
+          "web-books-discovery-3-d3b03242/events.jsonl"
+        ],
+        "validated": false
+      }
+    }
+  },
+  "states": {
+    "s0": {
+      "id": "s0",
+      "screen": "books_category_home",
+      "progress": "before_action_0",
+      "outcome": null,
+      "checkpoint": true
+    },
+    "s1": {
+      "id": "s1",
+      "screen": "category-travel-books-list",
+      "progress": "before_action_1",
+      "outcome": null,
+      "checkpoint": true
+    },
+    "done": {
+      "id": "done",
+      "screen": null,
+      "progress": "terminal",
+      "outcome": "succeeded",
+      "checkpoint": false
+    }
+  },
+  "transitions": [
+    {
+      "id": "t0",
+      "source": "s0",
+      "destination": "s1",
+      "action": {
+        "kind": "click",
+        "target": {
+          "kind": "browser",
+          "by": "role",
+          "name": "Travel",
+          "role": "link",
+          "frame": "",
+          "name_input": "category",
+          "row_input": null
+        },
+        "input": null,
+        "value": null
+      },
+      "guards": [],
+      "postconditions": [],
+      "timeout_s": 10,
+      "risk": "navigation",
+      "retries": 0,
+      "alternatives": {},
+      "provenance": {
+        "origin": "discovered",
+        "note": "Observed action; no inferred reverse edge",
+        "evidence": [],
+        "validated": false
+      }
+    },
+    {
+      "id": "t1",
+      "source": "s1",
+      "destination": "done",
+      "action": {
+        "kind": "extract",
+        "target": null,
+        "input": null,
+        "value": null
+      },
+      "guards": [],
+      "postconditions": [],
+      "timeout_s": 10,
+      "risk": "read",
+      "retries": 0,
+      "alternatives": {},
+      "provenance": {
+        "origin": "discovered",
+        "note": "Observed action; no inferred reverse edge",
+        "evidence": [],
+        "validated": false
+      }
+    }
+  ],
+  "terminals": [
+    "done"
+  ],
+  "max_steps": 40,
+  "discovery_run": "web-books-discovery-3-d3b03242",
+  "provider": "openai",
+  "model": "gpt-5.4-mini",
+  "compiler": "waypoint-web-2",
+  "status": "draft",
+  "validation_evidence": []
+}

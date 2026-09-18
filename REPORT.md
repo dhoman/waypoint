@@ -1,12 +1,22 @@
 # Architecture
 
-Waypoint implements a bounded member-to-invoice capability on a local synthetic
-legacy application. A genuine OpenAI discovery run chose four UI actions: bind
-the requested member, submit the search, select a profile, and open invoices.
-The model then declared completion; the executor independently extracted the
-displayed ledger. The fake members have different names and invoice values.
-An iframe is the meaningful legacy constraint. No agent tool exposes fixture
-source, database, setup hooks, network APIs, or arbitrary JavaScript.
+Waypoint discovers bounded capabilities on websites supplied at runtime. The
+default CLI accepts URL, goal and arbitrary named scalar inputs; no per-site
+Python code, selector profile or output schema is required. Version 2's generic
+observer exposes visible structural controls, headings, tables and a filtered
+DOM outline. The LLM chooses actions and proposes recognition/extraction rules;
+the executor validates them against the live UI. No tool exposes application
+source, databases, private APIs or arbitrary JavaScript execution.
+
+A real public-site discovery opened a bookstore category; model-blocked replay
+opened a different category and extracted its displayed books. Browser tests also
+cover an unrelated parts catalog and the synthetic member console's iframe.
+Generic discovery also executed the full four-action iframe route and strict
+replay returned member B's typed invoices and total of 100.00. Generic handoff
+has a simulated-operator browser regression, not a new physical-human recording.
+The original version-1 member-to-invoice demo/evidence remains readable via
+explicit compatibility mode. Its four-action route, business branch and real
+headed intervention are retained rather than represented as generic discovery.
 
 The system uses Python/Pydantic, one async Playwright session owner, a small CLI,
 JSON artifacts, JSONL events, and a standalone HTML/SVG inspector. The surface
@@ -27,26 +37,33 @@ catalog. The assignment PDF was unavailable; the supplied prompt was the brief.
 
 # Artifact schema
 
-Schema 1.0 separates reusable screens, task-specific control states/transitions,
+Schema 2.0 separates reusable screens, task-specific control states/transitions,
 and actual run evidence. Search before and after input uses one screen definition
 with different progress. Member profiles share landmarks but require an exact
 extracted Member ID equal to the mandatory input. Names, balances, and row counts
 do not become screen types. Dialogs, loading and read-only access change behavior.
 
-Artifacts include capability/revision, supported app/version/profile/surface,
+Artifacts include capability/revision, observed app title, origin, entry path,
+surface, explicitly unasserted app version until reviewed,
 typed input/output contracts, provenance, validation references, logical controls,
 declarative recognition/identity predicates, guards, actions, expected and
 alternative destinations, risk, deadlines and recovery policy. The language is
-closed: role/label locators, input references, fill/click/extract/outcome actions,
-and a few explicit predicates. There is no artifact-provided executable code.
+closed: role/label/text/title/placeholder/CSS locators, input references,
+fill/select/click/press/check/extract/outcome actions, and explicit predicates.
+Outputs use field, unique text/attribute, table, repeated list or numeric sum
+rules with scalar/column types. There is no artifact-provided executable code.
 Models reject unsupported types/references, missing nodes, unreachable terminals,
 invalid bindings and unsafe retry declarations. Global visit/step bounds limit
 cycles; this is not a general state-machine theorem prover.
 
 Compilation preserves the observed route. Repeated screen equivalence is checked
 against captured landmarks and remains draft until replay evidence exists.
-Output interpretation and identity contracts are explicitly authored. A subsequent
-revision adds the unseen missing-member branch with authored provenance. The
+Version-2 output and screen rules are model proposals checked by the executor;
+exact displayed entity-field matches add input identity bindings. Rejected
+proposals receive bounded discovery-only feedback, never an implicit replay fix.
+For version 1, output contracts were authored and a subsequent revision adds
+the unseen missing-member branch with authored provenance. Generic discovery
+does not claim to discover branches it has not seen. The
 qualification command requires matching artifact digests and coverage of every
 transition, alternative destination and terminal. It produces separate validation
 annotations, not an approval service or a claim that other routes do not exist.
@@ -78,8 +95,11 @@ explicit; the demonstrations establish behavior, not statistical reliability.
 
 # Heterogeneity & multi-tenant
 
-The supported deployment is Member Console 1.0, synthetic-local, browser. Runtime
-origin and inputs remain outside the reusable artifact. A future tenant/vendor
+The implemented surface is structural Chromium automation, not a site-specific
+integration. A fresh discovery supplies application knowledge as artifact data.
+Inputs and additional permissions are runtime configuration; the artifact pins
+its discovery origin and entry path. Cross-origin replay requires rediscovery.
+A future tenant/vendor
 profile could override logical locator bindings and approved variants in a new
 version, then revalidate outputs and identity. Changed landmarks, table headers,
 version markers, ambiguity or identity fail closed as drift. Shared templates do
@@ -110,13 +130,19 @@ changes would require a separately reviewed future revision.
 
 # Safety
 
-Policy lives outside the model/artifact. Resolved control semantics, navigation
-destinations, origin/routes, frames, popups and GET-only requests are checked.
+Policy lives outside the model/artifact. Generic control semantics, navigation
+origins, frames, popups and request methods are checked. Defaults permit reads,
+form input and recognizable navigation/search, but block consequential labels
+and unclassified buttons. Explicit CLI permissions can add origins, methods and
+exact control labels. This semantic heuristic cannot prove arbitrary GETs or
+page scripts are read-only. Passive assets can load across origins; this is not
+a hostile-site sandbox. The version-1 fixture retains its narrower route policy.
 Close account is rejected even when submitted as an ordinary click. The model's
 risk assertion is never authority. UI text is untrusted input to the discovery
 prompt; all chosen operations still pass the executor's allowlist.
 
-Only fake data is used. Environment credentials, browser storage, raw provider
+Evidence uses fake fixture data and a public scraping-practice bookstore, never
+private customer data. Environment credentials, browser storage, raw provider
 conversations and private reasoning are not persisted. Screenshots mask form
 values, and event capture discards typed values. Visible synthetic identities are
 retained to make failures auditable. This does not establish production-grade PII
