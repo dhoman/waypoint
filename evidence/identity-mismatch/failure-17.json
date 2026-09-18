@@ -1,0 +1,30 @@
+{
+  "headings": [
+    "Member profile"
+  ],
+  "fields": {
+    "Member ID": "M-101",
+    "Name": "Ada Mercer",
+    "Access": "Standard"
+  },
+  "controls": [
+    {
+      "role": "link",
+      "name": "Invoices",
+      "value": null,
+      "row": null
+    },
+    {
+      "role": "button",
+      "name": "Close account",
+      "value": null,
+      "row": null
+    }
+  ],
+  "tables": [],
+  "dialog": false,
+  "loading": false,
+  "readonly": false,
+  "version": "1.0",
+  "text": "Member profile\nMember ID\nM-101\nName\nAda Mercer\nAccess\nStandard\nInvoices Close account"
+}

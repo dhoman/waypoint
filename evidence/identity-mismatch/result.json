@@ -1,0 +1,54 @@
+{
+  "run_id": "identity-mismatch-fa500891",
+  "capability_id": "member-invoice-summary",
+  "revision": 2,
+  "status": "failed",
+  "outputs": null,
+  "business_code": null,
+  "state": "s2",
+  "transition": "t2",
+  "failure_category": "identity",
+  "reason": "identity mismatch: Member ID",
+  "expected": [
+    "member_profile"
+  ],
+  "expected_facts": {
+    "Member ID": "M-202",
+    "app_version": "1.0"
+  },
+  "observed": {
+    "headings": [
+      "Member profile"
+    ],
+    "fields": {
+      "Member ID": "M-101",
+      "Name": "Ada Mercer",
+      "Access": "Standard"
+    },
+    "controls": [
+      {
+        "role": "link",
+        "name": "Invoices",
+        "value": null,
+        "row": null
+      },
+      {
+        "role": "button",
+        "name": "Close account",
+        "value": null,
+        "row": null
+      }
+    ],
+    "tables": [],
+    "dialog": false,
+    "loading": false,
+    "readonly": false,
+    "version": "1.0",
+    "text": "Member profile\nMember ID\nM-101\nName\nAda Mercer\nAccess\nStandard\nInvoices Close account"
+  },
+  "evidence": [
+    "failure-17.json",
+    "failure-17.png"
+  ],
+  "effect": "not_attempted"
+}

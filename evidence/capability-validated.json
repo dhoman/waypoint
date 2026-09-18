@@ -1,0 +1,606 @@
+{
+  "schema_version": "1.0",
+  "capability_id": "member-invoice-summary",
+  "revision": 2,
+  "description": "Find the requested member and return their invoice summary.",
+  "surface": "browser",
+  "app": "Member Console",
+  "app_version": "1.0",
+  "profile": "synthetic-local",
+  "required_inputs": {
+    "memberId": "member_id"
+  },
+  "output_type": "invoice_summary",
+  "entry": "s0",
+  "screens": {
+    "member_search": {
+      "id": "member_search",
+      "recognition": [
+        {
+          "op": "heading",
+          "field": "",
+          "value": "Member search",
+          "input": null
+        },
+        {
+          "op": "no_dialog",
+          "field": "",
+          "value": "",
+          "input": null
+        }
+      ],
+      "identity": null,
+      "controls": {
+        "action_0": {
+          "kind": "browser",
+          "by": "label",
+          "name": "Member ID",
+          "role": "textbox",
+          "frame": "Member workspace",
+          "row_input": null
+        },
+        "action_1": {
+          "kind": "browser",
+          "by": "role",
+          "name": "Search",
+          "role": "button",
+          "frame": "Member workspace",
+          "row_input": null
+        }
+      },
+      "fields": [
+        "input:Member ID"
+      ],
+      "forbidden": [
+        "dialog",
+        "Read-only access"
+      ],
+      "variants": [],
+      "provenance": {
+        "origin": "discovered",
+        "note": "Observed UI landmarks; same-heading equivalence checked against every captured observation, cross-input validation still required.",
+        "evidence": [
+          "discovery-a-4c433bca/events.jsonl",
+          "replay-b/events.jsonl",
+          "missing-member/events.jsonl"
+        ],
+        "validated": true
+      }
+    },
+    "search_results": {
+      "id": "search_results",
+      "recognition": [
+        {
+          "op": "heading",
+          "field": "",
+          "value": "Search results",
+          "input": null
+        },
+        {
+          "op": "no_dialog",
+          "field": "",
+          "value": "",
+          "input": null
+        },
+        {
+          "op": "table_present",
+          "field": "",
+          "value": "Members",
+          "input": null
+        }
+      ],
+      "identity": {
+        "op": "field_equals_input",
+        "field": "Search ID",
+        "value": "",
+        "input": "memberId"
+      },
+      "controls": {
+        "action_2": {
+          "kind": "browser",
+          "by": "role",
+          "name": "View profile",
+          "role": "link",
+          "frame": "Member workspace",
+          "row_input": "memberId"
+        }
+      },
+      "fields": [
+        "Search ID"
+      ],
+      "forbidden": [
+        "dialog",
+        "Read-only access"
+      ],
+      "variants": [],
+      "provenance": {
+        "origin": "discovered",
+        "note": "Observed UI landmarks; same-heading equivalence checked against every captured observation, cross-input validation still required.",
+        "evidence": [
+          "discovery-a-4c433bca/events.jsonl",
+          "replay-b/events.jsonl",
+          "missing-member/events.jsonl"
+        ],
+        "validated": true
+      }
+    },
+    "member_profile": {
+      "id": "member_profile",
+      "recognition": [
+        {
+          "op": "heading",
+          "field": "",
+          "value": "Member profile",
+          "input": null
+        },
+        {
+          "op": "no_dialog",
+          "field": "",
+          "value": "",
+          "input": null
+        }
+      ],
+      "identity": {
+        "op": "field_equals_input",
+        "field": "Member ID",
+        "value": "",
+        "input": "memberId"
+      },
+      "controls": {
+        "action_3": {
+          "kind": "browser",
+          "by": "role",
+          "name": "Invoices",
+          "role": "link",
+          "frame": "Member workspace",
+          "row_input": null
+        }
+      },
+      "fields": [
+        "Member ID",
+        "Name",
+        "Access"
+      ],
+      "forbidden": [
+        "dialog",
+        "Read-only access"
+      ],
+      "variants": [],
+      "provenance": {
+        "origin": "discovered",
+        "note": "Observed UI landmarks; same-heading equivalence checked against every captured observation, cross-input validation still required.",
+        "evidence": [
+          "discovery-a-4c433bca/events.jsonl",
+          "replay-b/events.jsonl",
+          "missing-member/events.jsonl"
+        ],
+        "validated": true
+      }
+    },
+    "member_invoices": {
+      "id": "member_invoices",
+      "recognition": [
+        {
+          "op": "heading",
+          "field": "",
+          "value": "Member invoices",
+          "input": null
+        },
+        {
+          "op": "no_dialog",
+          "field": "",
+          "value": "",
+          "input": null
+        },
+        {
+          "op": "table_present",
+          "field": "",
+          "value": "Invoice ledger",
+          "input": null
+        }
+      ],
+      "identity": {
+        "op": "field_equals_input",
+        "field": "Member ID",
+        "value": "",
+        "input": "memberId"
+      },
+      "controls": {},
+      "fields": [
+        "Member ID",
+        "Name",
+        "Access"
+      ],
+      "forbidden": [
+        "dialog",
+        "Read-only access"
+      ],
+      "variants": [],
+      "provenance": {
+        "origin": "discovered",
+        "note": "Observed UI landmarks; same-heading equivalence checked against every captured observation, cross-input validation still required.",
+        "evidence": [
+          "discovery-a-4c433bca/events.jsonl",
+          "replay-b/events.jsonl",
+          "missing-member/events.jsonl"
+        ],
+        "validated": true
+      }
+    },
+    "no_members": {
+      "id": "no_members",
+      "recognition": [
+        {
+          "op": "heading",
+          "field": "",
+          "value": "No members found",
+          "input": null
+        },
+        {
+          "op": "no_dialog",
+          "field": "",
+          "value": "",
+          "input": null
+        }
+      ],
+      "identity": {
+        "op": "field_equals_input",
+        "field": "Search ID",
+        "value": "",
+        "input": "memberId"
+      },
+      "controls": {},
+      "fields": [
+        "Search ID"
+      ],
+      "forbidden": [
+        "dialog",
+        "Read-only access"
+      ],
+      "variants": [],
+      "provenance": {
+        "origin": "authored",
+        "note": "Developer-authored missing-member branch; not observed in happy-path discovery.",
+        "evidence": [
+          "replay-b/events.jsonl",
+          "missing-member/events.jsonl"
+        ],
+        "validated": true
+      }
+    }
+  },
+  "states": {
+    "s0": {
+      "id": "s0",
+      "screen": "member_search",
+      "progress": "search",
+      "outcome": null,
+      "checkpoint": false
+    },
+    "s1": {
+      "id": "s1",
+      "screen": "member_search",
+      "progress": "query_bound",
+      "outcome": null,
+      "checkpoint": false
+    },
+    "s2": {
+      "id": "s2",
+      "screen": "search_results",
+      "progress": "results",
+      "outcome": null,
+      "checkpoint": false
+    },
+    "s3": {
+      "id": "s3",
+      "screen": "member_profile",
+      "progress": "identity_verified",
+      "outcome": null,
+      "checkpoint": true
+    },
+    "s4": {
+      "id": "s4",
+      "screen": "member_invoices",
+      "progress": "invoices",
+      "outcome": null,
+      "checkpoint": true
+    },
+    "done": {
+      "id": "done",
+      "screen": null,
+      "progress": "terminal",
+      "outcome": "succeeded",
+      "checkpoint": false
+    },
+    "missing": {
+      "id": "missing",
+      "screen": "no_members",
+      "progress": "terminal",
+      "outcome": "member_not_found",
+      "checkpoint": false
+    }
+  },
+  "transitions": [
+    {
+      "id": "t0",
+      "source": "s0",
+      "destination": "s1",
+      "alternatives": {},
+      "action": {
+        "kind": "fill",
+        "target": {
+          "kind": "browser",
+          "by": "label",
+          "name": "Member ID",
+          "role": "textbox",
+          "frame": "Member workspace",
+          "row_input": null
+        },
+        "input": "memberId"
+      },
+      "guards": [
+        {
+          "op": "no_dialog",
+          "field": "",
+          "value": "",
+          "input": null
+        }
+      ],
+      "postconditions": [],
+      "risk": "read",
+      "timeout_s": 5.0,
+      "retries": 0,
+      "retry_safe": false,
+      "recovery": "wait_loading_then_check",
+      "provenance": {
+        "origin": "discovered",
+        "note": "Exact observed action; no detours removed.",
+        "evidence": [
+          "discovery-a-4c433bca/events.jsonl",
+          "replay-b/events.jsonl",
+          "missing-member/events.jsonl"
+        ],
+        "validated": true
+      }
+    },
+    {
+      "id": "t1",
+      "source": "s1",
+      "destination": "s2",
+      "alternatives": {
+        "missing": [
+          {
+            "op": "heading",
+            "field": "",
+            "value": "No members found",
+            "input": null
+          },
+          {
+            "op": "field_equals_input",
+            "field": "Search ID",
+            "value": "",
+            "input": "memberId"
+          }
+        ]
+      },
+      "action": {
+        "kind": "click",
+        "target": {
+          "kind": "browser",
+          "by": "role",
+          "name": "Search",
+          "role": "button",
+          "frame": "Member workspace",
+          "row_input": null
+        },
+        "input": null
+      },
+      "guards": [
+        {
+          "op": "no_dialog",
+          "field": "",
+          "value": "",
+          "input": null
+        },
+        {
+          "op": "input_value",
+          "field": "Member ID",
+          "value": "",
+          "input": "memberId"
+        }
+      ],
+      "postconditions": [
+        {
+          "op": "field_equals_input",
+          "field": "Search ID",
+          "value": "",
+          "input": "memberId"
+        }
+      ],
+      "risk": "navigation",
+      "timeout_s": 5.0,
+      "retries": 0,
+      "retry_safe": false,
+      "recovery": "wait_loading_then_check",
+      "provenance": {
+        "origin": "discovered",
+        "note": "Exact observed action; no detours removed.",
+        "evidence": [
+          "discovery-a-4c433bca/events.jsonl",
+          "replay-b/events.jsonl",
+          "missing-member/events.jsonl"
+        ],
+        "validated": true
+      }
+    },
+    {
+      "id": "t2",
+      "source": "s2",
+      "destination": "s3",
+      "alternatives": {},
+      "action": {
+        "kind": "click",
+        "target": {
+          "kind": "browser",
+          "by": "role",
+          "name": "View profile",
+          "role": "link",
+          "frame": "Member workspace",
+          "row_input": "memberId"
+        },
+        "input": null
+      },
+      "guards": [
+        {
+          "op": "no_dialog",
+          "field": "",
+          "value": "",
+          "input": null
+        },
+        {
+          "op": "field_equals_input",
+          "field": "Search ID",
+          "value": "",
+          "input": "memberId"
+        }
+      ],
+      "postconditions": [
+        {
+          "op": "field_equals_input",
+          "field": "Member ID",
+          "value": "",
+          "input": "memberId"
+        }
+      ],
+      "risk": "navigation",
+      "timeout_s": 5.0,
+      "retries": 0,
+      "retry_safe": false,
+      "recovery": "wait_loading_then_check",
+      "provenance": {
+        "origin": "discovered",
+        "note": "Exact observed action; no detours removed.",
+        "evidence": [
+          "discovery-a-4c433bca/events.jsonl",
+          "replay-b/events.jsonl",
+          "missing-member/events.jsonl"
+        ],
+        "validated": true
+      }
+    },
+    {
+      "id": "t3",
+      "source": "s3",
+      "destination": "s4",
+      "alternatives": {},
+      "action": {
+        "kind": "click",
+        "target": {
+          "kind": "browser",
+          "by": "role",
+          "name": "Invoices",
+          "role": "link",
+          "frame": "Member workspace",
+          "row_input": null
+        },
+        "input": null
+      },
+      "guards": [
+        {
+          "op": "no_dialog",
+          "field": "",
+          "value": "",
+          "input": null
+        },
+        {
+          "op": "field_equals_input",
+          "field": "Member ID",
+          "value": "",
+          "input": "memberId"
+        }
+      ],
+      "postconditions": [
+        {
+          "op": "field_equals_input",
+          "field": "Member ID",
+          "value": "",
+          "input": "memberId"
+        }
+      ],
+      "risk": "navigation",
+      "timeout_s": 5.0,
+      "retries": 0,
+      "retry_safe": false,
+      "recovery": "wait_loading_then_check",
+      "provenance": {
+        "origin": "discovered",
+        "note": "Exact observed action; no detours removed.",
+        "evidence": [
+          "discovery-a-4c433bca/events.jsonl",
+          "replay-b/events.jsonl",
+          "missing-member/events.jsonl"
+        ],
+        "validated": true
+      }
+    },
+    {
+      "id": "extract",
+      "source": "s4",
+      "destination": "done",
+      "alternatives": {},
+      "action": {
+        "kind": "extract",
+        "target": null,
+        "input": null
+      },
+      "guards": [
+        {
+          "op": "field_equals_input",
+          "field": "Member ID",
+          "value": "",
+          "input": "memberId"
+        },
+        {
+          "op": "table_present",
+          "field": "",
+          "value": "Invoice ledger",
+          "input": null
+        }
+      ],
+      "postconditions": [],
+      "risk": "read",
+      "timeout_s": 5.0,
+      "retries": 0,
+      "retry_safe": false,
+      "recovery": "wait_loading_then_check",
+      "provenance": {
+        "origin": "authored",
+        "note": "Typed output contract: Invoice ledger columns Invoice / Amount USD / Status; independently read from final UI.",
+        "evidence": [
+          "replay-b/events.jsonl",
+          "missing-member/events.jsonl"
+        ],
+        "validated": true
+      }
+    }
+  ],
+  "terminals": [
+    "done",
+    "missing"
+  ],
+  "max_steps": 20,
+  "max_visits": 2,
+  "discovery_run": "discovery-a-4c433bca",
+  "provider": "openai",
+  "model": "gpt-5.4-mini",
+  "compiler": "waypoint-0.1.0",
+  "amendments": [
+    "Typed invoice extraction and screen identity rules are developer-authored contracts, not inferred application completeness.",
+    "Revision adds an authored missing-member outcome after Search; requires separate validation."
+  ],
+  "status": "validated",
+  "validation_evidence": [
+    "replay-b/events.jsonl",
+    "missing-member/events.jsonl"
+  ]
+}

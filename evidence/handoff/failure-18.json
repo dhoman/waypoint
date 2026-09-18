@@ -1,0 +1,42 @@
+{
+  "headings": [
+    "Member profile"
+  ],
+  "fields": {
+    "Member ID": "M-202",
+    "Name": "Ben Ortiz",
+    "Access": "Standard"
+  },
+  "controls": [
+    {
+      "role": "link",
+      "name": "Invoices",
+      "value": null,
+      "row": null
+    },
+    {
+      "role": "button",
+      "name": "Close account",
+      "value": null,
+      "row": null
+    },
+    {
+      "role": "textbox",
+      "name": "Operator note",
+      "value": "[redacted]",
+      "row": null
+    },
+    {
+      "role": "button",
+      "name": "Dismiss notice",
+      "value": null,
+      "row": null
+    }
+  ],
+  "tables": [],
+  "dialog": true,
+  "loading": false,
+  "readonly": false,
+  "version": "1.0",
+  "text": "Member profile\nMember ID\nM-202\nName\nBen Ortiz\nAccess\nStandard\nInvoices Close account"
+}

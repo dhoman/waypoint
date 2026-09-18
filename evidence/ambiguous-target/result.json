@@ -1,0 +1,73 @@
+{
+  "run_id": "ambiguous-target-d553828b",
+  "capability_id": "member-invoice-summary",
+  "revision": 2,
+  "status": "failed",
+  "outputs": null,
+  "business_code": null,
+  "state": "s2",
+  "transition": "t2",
+  "failure_category": "ambiguity",
+  "reason": "ambiguous or missing target",
+  "expected": [
+    "member_profile"
+  ],
+  "expected_facts": {
+    "Member ID": "M-202",
+    "app_version": "1.0"
+  },
+  "observed": {
+    "headings": [
+      "Search results"
+    ],
+    "fields": {
+      "Search ID": "M-202"
+    },
+    "controls": [
+      {
+        "role": "link",
+        "name": "View profile",
+        "value": null,
+        "row": "M-202\tBen Ortiz\tView profile"
+      },
+      {
+        "role": "link",
+        "name": "View profile",
+        "value": null,
+        "row": "M-202\tBen Ortiz\tView profile"
+      }
+    ],
+    "tables": [
+      {
+        "caption": "Members",
+        "headers": [
+          "Member ID",
+          "Name",
+          "Details"
+        ],
+        "rows": [
+          [
+            "M-202",
+            "Ben Ortiz",
+            "View profile"
+          ],
+          [
+            "M-202",
+            "Ben Ortiz",
+            "View profile"
+          ]
+        ]
+      }
+    ],
+    "dialog": false,
+    "loading": false,
+    "readonly": false,
+    "version": "1.0",
+    "text": "Search results\nSearch ID\nM-202\nMembers\nMember ID\tName\tDetails\nM-202\tBen Ortiz\tView profile\nM-202\tBen Ortiz\tView profile"
+  },
+  "evidence": [
+    "failure-15.json",
+    "failure-15.png"
+  ],
+  "effect": "not_attempted"
+}

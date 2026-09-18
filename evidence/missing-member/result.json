@@ -1,0 +1,36 @@
+{
+  "run_id": "missing-member-df7cb1e4",
+  "capability_id": "member-invoice-summary",
+  "revision": 2,
+  "status": "business_outcome",
+  "outputs": null,
+  "business_code": "member_not_found",
+  "state": "missing",
+  "transition": "t1",
+  "failure_category": null,
+  "reason": null,
+  "expected": [
+    "search_results"
+  ],
+  "expected_facts": {
+    "Member ID": "M-999",
+    "app_version": "1.0"
+  },
+  "observed": {
+    "headings": [
+      "No members found"
+    ],
+    "fields": {
+      "Search ID": "M-999"
+    },
+    "controls": [],
+    "tables": [],
+    "dialog": false,
+    "loading": false,
+    "readonly": false,
+    "version": "1.0",
+    "text": "No members found\nSearch ID\nM-999"
+  },
+  "evidence": [],
+  "effect": "not_attempted"
+}

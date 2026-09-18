@@ -1,0 +1,49 @@
+{
+  "headings": [
+    "Search results"
+  ],
+  "fields": {
+    "Search ID": "M-202"
+  },
+  "controls": [
+    {
+      "role": "link",
+      "name": "View profile",
+      "value": null,
+      "row": "M-202\tBen Ortiz\tView profile"
+    },
+    {
+      "role": "link",
+      "name": "View profile",
+      "value": null,
+      "row": "M-202\tBen Ortiz\tView profile"
+    }
+  ],
+  "tables": [
+    {
+      "caption": "Members",
+      "headers": [
+        "Member ID",
+        "Name",
+        "Details"
+      ],
+      "rows": [
+        [
+          "M-202",
+          "Ben Ortiz",
+          "View profile"
+        ],
+        [
+          "M-202",
+          "Ben Ortiz",
+          "View profile"
+        ]
+      ]
+    }
+  ],
+  "dialog": false,
+  "loading": false,
+  "readonly": false,
+  "version": "1.0",
+  "text": "Search results\nSearch ID\nM-202\nMembers\nMember ID\tName\tDetails\nM-202\tBen Ortiz\tView profile\nM-202\tBen Ortiz\tView profile"
+}

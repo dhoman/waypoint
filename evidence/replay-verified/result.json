@@ -1,0 +1,75 @@
+{
+  "run_id": "replay-verified-2f9a3e85",
+  "capability_id": "member-invoice-summary",
+  "revision": 2,
+  "status": "succeeded",
+  "outputs": {
+    "memberId": "M-202",
+    "currency": "USD",
+    "invoices": [
+      {
+        "invoice_id": "INV-2021",
+        "amount": 84.25,
+        "status": "Open"
+      },
+      {
+        "invoice_id": "INV-2022",
+        "amount": 15.75,
+        "status": "Paid"
+      }
+    ],
+    "total": 100.0
+  },
+  "business_code": null,
+  "state": "done",
+  "transition": "extract",
+  "failure_category": null,
+  "reason": null,
+  "expected": [
+    "done"
+  ],
+  "expected_facts": {
+    "Member ID": "M-202",
+    "app_version": "1.0"
+  },
+  "observed": {
+    "headings": [
+      "Member invoices"
+    ],
+    "fields": {
+      "Member ID": "M-202",
+      "Name": "Ben Ortiz",
+      "Access": "Standard"
+    },
+    "controls": [],
+    "tables": [
+      {
+        "caption": "Invoice ledger",
+        "headers": [
+          "Invoice",
+          "Amount USD",
+          "Status"
+        ],
+        "rows": [
+          [
+            "INV-2021",
+            "84.25",
+            "Open"
+          ],
+          [
+            "INV-2022",
+            "15.75",
+            "Paid"
+          ]
+        ]
+      }
+    ],
+    "dialog": false,
+    "loading": false,
+    "readonly": false,
+    "version": "1.0",
+    "text": "Member invoices\nMember ID\nM-202\nName\nBen Ortiz\nAccess\nStandard\nInvoice ledger\nInvoice\tAmount USD\tStatus\nINV-2021\t84.25\tOpen\nINV-2022\t15.75\tPaid"
+  },
+  "evidence": [],
+  "effect": "not_attempted"
+}
