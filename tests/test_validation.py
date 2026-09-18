@@ -12,7 +12,10 @@ def artifact():
     return json.loads(Path("evidence/capability.json").read_text())
 
 
-@pytest.mark.parametrize("damage", ["target", "parameter", "unreachable", "unbounded", "action", "locator", "retry"])
+@pytest.mark.parametrize(
+    "damage",
+    ["target", "parameter", "unreachable", "unbounded", "action", "locator", "retry"],
+)
 def test_unsafe_or_malformed_artifacts_are_rejected(damage):
     data = artifact()
     if damage == "target":
@@ -44,4 +47,6 @@ def test_multiple_matching_transition_guards_are_an_error():
     duplicate = cap.transitions[0].model_copy(update={"id": "duplicate"})
     cap.transitions.append(duplicate)
     with pytest.raises(ValueError, match="ambiguous transitions"):
-        choose_transition(cap, cap.entry, Observation(version="1.0"), Inputs(memberId="M-202"))
+        choose_transition(
+            cap, cap.entry, Observation(version="1.0"), Inputs(memberId="M-202")
+        )

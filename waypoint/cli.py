@@ -88,6 +88,10 @@ def main():
     inspect.add_argument("--artifact", required=True)
     inspect.add_argument("--runs", nargs="+", required=True)
     inspect.add_argument("--out", default="runs/inspector.html")
+    validation = commands.add_parser("qualify")
+    validation.add_argument("--artifact", required=True)
+    validation.add_argument("--runs", nargs="+", required=True)
+    validation.add_argument("--out", required=True)
     for command in ("discover", "replay"):
         p = commands.add_parser(command)
         p.add_argument("--url", default="http://127.0.0.1:8765/")
@@ -104,6 +108,17 @@ def main():
             p.add_argument("--artifact", required=True)
             p.add_argument("--interactive", action="store_true")
     args = parser.parse_args()
+    if args.command == "qualify":
+        from waypoint.qualification import qualify
+
+        cap = qualify(
+            Capability.model_validate_json(Path(args.artifact).read_text()),
+            [Path(p) for p in args.runs],
+        )
+        with Path(args.out).open("x") as f:
+            f.write(cap.model_dump_json(indent=2) + "\n")
+        print(f"Validation annotations saved to {args.out}")
+        return
     if args.command == "inspect":
         from waypoint.inspector import render_inspector
 

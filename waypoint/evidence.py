@@ -19,6 +19,15 @@ def sanitized(obs: Observation):
     return data
 
 
+def sanitize_manual_event(event):
+    return {
+        "kind": event["kind"],
+        "tag": str(event.get("tag", ""))[:20],
+        "target": str(event.get("target", ""))[:100],
+        "value": "[redacted]" if event["kind"] == "input" else None,
+    }
+
+
 class Trace:
     def __init__(self, directory, capability=None, *, kind="replay"):
         self.directory = Path(directory)
@@ -33,6 +42,7 @@ class Trace:
             "run_started",
             kind=kind,
             code_version="0.1.0",
+            source_sha256=source_digest(),
             artifact_sha256=hashlib.sha256(
                 capability.model_dump_json().encode()
             ).hexdigest()
@@ -61,3 +71,12 @@ class Trace:
         path = self.directory / name
         path.write_text(json.dumps(value, indent=2) + "\n")
         return name
+
+
+def source_digest():
+    digest = hashlib.sha256()
+    for path in sorted(Path(__file__).parent.glob("*")):
+        if path.suffix in {".py", ".html"}:
+            digest.update(path.name.encode())
+            digest.update(path.read_bytes())
+    return digest.hexdigest()

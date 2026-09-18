@@ -29,6 +29,7 @@ class Provider(Protocol):
 async def discover(
     goal, surface, inputs, provider: Provider, trace, *, max_steps=16, timeout_s=120
 ):
+    surface.event_sink = trace.emit
     steps, history = [], []
     previous, repeats = None, 0
     try:

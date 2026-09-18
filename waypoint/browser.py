@@ -5,7 +5,7 @@ from time import monotonic
 
 from playwright.async_api import async_playwright
 
-from waypoint.evidence import sanitized
+from waypoint.evidence import sanitize_manual_event, sanitized
 from waypoint.ownership import Ownership
 from waypoint.policy import BrowserPolicy
 from waypoint.schema import Action, Inputs, Observation, Target
@@ -100,10 +100,7 @@ class BrowserSurface:
         if event.get("kind") in {"click", "input"}:
             self.event_sink(
                 "human_action",
-                kind=event["kind"],
-                tag=str(event.get("tag", ""))[:20],
-                target=str(event.get("target", ""))[:100],
-                value="[redacted]" if event["kind"] == "input" else None,
+                **sanitize_manual_event(event),
                 capture="in-page trusted DOM event; not proof of a physical human",
             )
 
@@ -182,6 +179,12 @@ class BrowserSurface:
         for key in ("Member ID", "Search ID"):
             if key in obs.fields and obs.fields[key] != inputs.memberId:
                 raise ValueError("identity mismatch before action")
+        if (
+            action.target
+            and action.target.name == "Invoices"
+            and obs.fields.get("Member ID") != inputs.memberId
+        ):
+            raise ValueError("identity missing before entity action")
         started = monotonic()
         locator = await self._resolve(action.target, inputs)
         actual = await locator.evaluate(

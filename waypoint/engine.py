@@ -157,7 +157,10 @@ class Replay:
                 self.steps += 1
                 destination = transition.destination
                 if not self.cap.states[transition.destination].outcome:
-                    post, recognized = await self._observe(transition.timeout_s, allow_wait=transition.recovery == "wait_loading_then_check")
+                    post, recognized = await self._observe(
+                        transition.timeout_s,
+                        allow_wait=transition.recovery == "wait_loading_then_check",
+                    )
                     if recognized.kind == "unknown":
                         return await self._stop(
                             "awaiting_intervention",
@@ -209,6 +212,10 @@ class Replay:
             state=self.state,
             transition=self.transition,
             expected=self.expected,
+            expected_facts={
+                "Member ID": self.inputs.memberId,
+                "app_version": self.cap.app_version,
+            },
             observed=sanitized(self.last_obs) if self.last_obs else {},
             **kwargs,
         )

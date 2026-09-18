@@ -51,6 +51,18 @@ class Predicate(Model):
     value: str = ""
     input: Literal["memberId"] | None = None
 
+    @model_validator(mode="after")
+    def operands(self):
+        if self.op in {"field_equals_input", "input_value"} and (
+            not self.field or not self.input
+        ):
+            raise ValueError("binding predicate requires field and input")
+        if self.op in {"heading", "table_present"} and not self.value:
+            raise ValueError("recognition predicate requires a value")
+        if self.op == "field_equals" and not self.field:
+            raise ValueError("field predicate requires a field")
+        return self
+
 
 class Action(Model):
     kind: Literal["fill", "click", "extract", "outcome"]
@@ -156,6 +168,8 @@ class Capability(Model):
         for key, s in self.states.items():
             if key != s.id or (s.screen is not None and s.screen not in self.screens):
                 raise ValueError("invalid state/screen reference")
+            if not s.outcome and s.screen is None:
+                raise ValueError("nonterminal state requires a recognized screen")
         ids = set()
         reachable = {self.entry}
         for t in self.transitions:
@@ -220,6 +234,7 @@ class Result(Model):
     failure_category: str | None = None
     reason: str | None = None
     expected: list[str] = Field(default_factory=list)
+    expected_facts: dict[str, str] = Field(default_factory=dict)
     observed: dict = Field(default_factory=dict)
     evidence: list[str] = Field(default_factory=list)
     effect: Literal["not_attempted", "confirmed", "uncertain"] = "not_attempted"
