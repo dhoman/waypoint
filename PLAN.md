@@ -1,5 +1,18 @@
 # Implementation plan
 
+## General website correction
+
+- [ ] Generic browser observation/targeting and runtime URL/action permissions.
+- [ ] Version 2 artifact with arbitrary typed inputs, learned recognition and extraction.
+- [ ] Generic LLM discovery, deterministic replay and same-session handoff in the CLI.
+- [ ] Prove reuse against unrelated applications and a public site without changing engine code.
+- [ ] Update documentation, retain real evidence, and commit verified milestones.
+
+Version 1 remains readable for existing evidence. New websites must not require
+application-specific code, selectors or profiles before discovery. Authentication,
+additional origins and consequential-action permissions remain explicit runtime
+choices rather than authority inferred from page content.
+
 - [x] Inspect repository/environment and OpenAdapt; choose narrow direct adapter.
 - [x] Build typed artifact, synthetic iframe application, surface and event contracts.
 - [x] Execute genuine LLM discovery; compile and replay with different inputs.
