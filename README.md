@@ -1,32 +1,31 @@
 # Waypoint
 
 Discover a UI workflow with an LLM, save it as a typed capability graph, and
-replay it with different inputs **without a model**. Website-specific knowledge
-is artifact data, not a Python module per site. The implemented surface is a
-local Playwright browser; desktop/native automation is not implemented.
+replay it with different inputs without a model. Artifacts hold website-specific
+knowledge. Automation uses a local Playwright browser; desktop/native support is
+not implemented.
 
 ## Start here
 
-- **Run it:** setup and commands below.
-- **Understand it:** [architecture and execution walkthrough](docs/ARCHITECTURE.md).
-- **Find a file or class:** [package map](waypoint/README.md).
-- **Add a surface or provider:** [extension guide](docs/EXTENDING.md).
-- **Change code:** [contributor guide](CONTRIBUTING.md), [test map](tests/README.md),
+- Run it with the setup and commands below.
+- Understand execution with the [architecture walkthrough](docs/ARCHITECTURE.md).
+- Find files and classes in the [package map](waypoint/README.md).
+- Add a surface or provider with the [extension guide](docs/EXTENDING.md).
+- Change code with the [contributor guide](CONTRIBUTING.md), [test map](tests/README.md),
   and [agent instructions](AGENTS.md).
-- **Review the take-home:** [REPORT.md](REPORT.md), [recorded evidence](evidence/README.md),
+- Review the take-home in [REPORT.md](REPORT.md), [recorded evidence](evidence/README.md),
   and the [documentation index](docs/README.md).
 
-There is now **one engine and one supported artifact schema (2.0)**. The retired
-version-1 implementation, `--member` mode and fixture-specific `amend` command
-were removed. Historical evidence is retained, not executable through the new
-CLI. Current `discover`, `replay`, `inspect`, `qualify`, `fixture` and strict
-entrypoints remain. Internal Python imports moved; see the package map.
+The engine supports only artifact schema 2.0. Version-1 code, `--member` mode
+and the fixture-specific `amend` command were removed; their evidence is
+historical. The current CLI cannot run schema-1 artifacts. The `discover`,
+`replay`, `inspect`, `qualify`, `fixture` and strict entrypoints remain. See the
+package map for moved Python imports.
 
 ## Setup
 
-Use the existing [uv](https://docs.astral.sh/uv/) installation; no additional
-Python version manager is required. `.python-version` selects Python 3.12;
-`uv.lock` pins dependencies.
+Use the existing [uv](https://docs.astral.sh/uv/) installation.
+`.python-version` selects Python 3.12; `uv.lock` pins dependencies.
 
 ```sh
 uv sync --extra discovery --extra dev
@@ -34,15 +33,14 @@ uv run --no-sync playwright install chromium
 ```
 
 Linux may require `uv run --no-sync playwright install --with-deps chromium`.
-Headless runs need no display; manual control needs a desktop and `--headed`.
-An optional remote desktop can provide a display, but hosted infrastructure is
-not required.
+Headless runs need no display; manual control needs a desktop and `--headed`. A
+remote desktop can provide a display; hosted infrastructure is optional.
 
-Discovery requires `OPENAI_API_KEY` and a selected model via `--model` or
+Discovery requires `OPENAI_API_KEY` and a model selected via `--model` or
 `WAYPOINT_MODEL`. The retained real runs used `gpt-5.4-mini`. Credentials are
-read from the environment, never put in the artifact. Only discovery calls the
-model. Replay-only installation is `uv sync`; the provider SDK is optional.
-Use `--no-sync` after selecting extras so subsequent commands keep that environment.
+read from the environment and never saved in artifacts. Only discovery calls the
+model. Replay-only installation is `uv sync`; the provider SDK is optional. Use
+`--no-sync` after selecting extras so subsequent commands keep that environment.
 
 ## Quick model-free demo
 
@@ -52,7 +50,7 @@ In terminal 1, start the synthetic member console with its legacy iframe:
 uv run --no-sync waypoint fixture --port 8770
 ```
 
-In terminal 2, replay the **saved schema-2 artifact** for another member:
+In terminal 2, replay the saved schema-2 artifact for another member:
 
 ```sh
 uv run --no-sync python -m waypoint.strict replay \
@@ -64,14 +62,14 @@ uv run --no-sync waypoint inspect \
   --runs runs/member-replay --out runs/member-inspector.html
 ```
 
-Expected result: M-202's two displayed invoices, amounts 84.25 and 15.75,
-total **100.00**. Open `runs/member-inspector.html` in a browser. No server or
-frontend build is needed for the inspector. Each `--out` must be a new directory.
+Expected result: M-202's two displayed invoices, amounts 84.25 and 15.75, total
+100.00. Open `runs/member-inspector.html` in a browser. No server or frontend
+build is needed for the inspector. Each `--out` must be a new directory.
 
-Strict mode removes model credentials and actively verifies that provider
-imports and non-loopback Python connections are blocked. Chromium's website
-traffic has a separate runtime policy. This is a practical replay guard, **not an
-OS sandbox**. Each strict run saves `isolation.json`.
+Strict mode removes model credentials and verifies that provider imports and
+non-loopback Python connections are blocked. Chromium's website traffic has a
+separate runtime policy. Strict mode is not an OS sandbox. Each strict run saves
+`isolation.json`.
 
 ## Discover on a website, then replay
 
@@ -93,20 +91,19 @@ uv run --no-sync waypoint inspect \
   --runs runs/books-replay --out runs/books-inspector.html
 ```
 
-For your site, change the URL, goal and `--input NAME=VALUE` arguments. Inputs are
-scalar strings, JSON numbers or booleans; replay requires the same names/types,
-not the demonstrated values. Discover a separate capability for each task/site.
-You do not write selectors, screens or extraction code first.
+For your site, change the URL, goal and `--input NAME=VALUE` arguments. Inputs
+are scalar strings, JSON numbers or booleans; replay requires the same
+names/types, not the demonstrated values. Discover a separate capability for
+each task/site. You do not write selectors, screens or extraction code first.
 
-Inspect the resulting draft and test new inputs: the model can propose incorrect
-or overfitted rules. Rejected pre-action proposals get bounded discovery feedback;
-replay never calls a model or silently repairs its graph. One route does not
-prove all business branches. The missing-member branch is supported when
-explicitly authored in artifact data and is covered by tests; it is not invented
-from a successful search.
+Inspect the draft and test new inputs for incorrect or overfitted model rules.
+Rejected pre-action proposals get bounded discovery feedback; replay never calls
+a model or repairs its graph. One route does not prove all business branches.
+Tests cover an explicitly authored missing-member branch; discovery cannot infer
+it from a successful search.
 
-Outputs and failures are in `result.json`, events in `events.jsonl`. To annotate a
-fully covered draft without modifying it:
+`result.json` contains outputs and failures; `events.jsonl` contains events. To
+annotate a fully covered draft without modifying it:
 
 ```sh
 uv run --no-sync waypoint qualify \
@@ -114,9 +111,9 @@ uv run --no-sync waypoint qualify \
   --runs runs/books-replay --out runs/books-validated.json
 ```
 
-Qualification requires matching artifact fingerprints and execution evidence
-for every transition, alternative destination and terminal; it is not approval
-to operate on arbitrary tenants or production systems.
+Qualification requires matching artifact fingerprints and execution evidence for
+every transition, alternative destination and terminal; it is not approval to
+operate on arbitrary tenants or production systems.
 
 ## Same-session human control
 
@@ -131,7 +128,7 @@ uv run --no-sync python -m waypoint.strict replay \
 ```
 
 At the pause, enter `take TOKEN` using the printed token. Dismiss the notice in
-the **same browser window**, then enter `resume TOKEN`. You can also `cancel`.
+the same browser window, then enter `resume TOKEN`. You can also `cancel`.
 Automation cannot act during human ownership. Resume observes again and verifies
 a permitted checkpoint and identity; approval does not waive those checks.
 Browser-page click targets and redacted input events are captured, not global
@@ -147,7 +144,7 @@ Other runtime options:
 | `--allow-control 'Exact label'` | Explicitly authorize an otherwise disallowed control. This may permit consequential actions. |
 
 The fixture also supports `?scenario=slow`, `mismatch`, `ambiguous`, and
-`readonly`. These are developer-controlled setup, not tools exposed to the model.
+`readonly`. Developers configure these scenarios; the model cannot select them.
 Do not assume a fixture variant is an approved graph branch.
 
 ## Development and limitations
@@ -158,21 +155,23 @@ uv run --no-sync ruff check waypoint tests
 uv run --no-sync ruff format --check waypoint tests
 ```
 
-The [test map](tests/README.md) explains focused runs, test-only adapters and safety
-coverage. The browser adapter and in-memory test adapter exercise the same
-surface interface; the latter is **not** desktop support.
+The [test map](tests/README.md) explains focused runs, test-only adapters and
+safety coverage. The browser adapter and in-memory test adapter exercise the
+same surface interface. The in-memory adapter does not provide desktop support.
 
-DOM forms, links, tables, repeated lists and named iframes are supported. CAPTCHA,
-canvas-only controls, unnamed frames, popup authentication and complex shadow-DOM
-workflows may require manual steps or adapter improvements. Capabilities remain
-bounded, app-scoped drafts until validated; no global route planner exists.
+DOM forms, links, tables, repeated lists and named iframes are supported.
+CAPTCHA, canvas-only controls, unnamed frames, popup authentication and complex
+shadow-DOM workflows may require manual steps or adapter improvements.
+Capabilities remain bounded, app-scoped drafts until validated; no global route
+planner exists.
 
 UI text is sent to the configured model during discovery and retained in local
-evidence. Form masking and redacted input events are **not production PII
-removal**. Use public/synthetic data only. Policy constrains origins, methods and
+evidence. Form masking and redacted input events do not provide production PII
+removal. Use public/synthetic data only. Policy constrains origins, methods and
 control semantics, but cannot prove that arbitrary page scripts or GET handlers
 are harmless.
 
-[OpenAdapt investigation](docs/adr-001-surface.md): independently implemented
-adapter, no copied OpenAdapt code. The assignment PDF was absent. No public
-repository push, deployment or submission has been performed.
+The adapter was implemented independently after an [OpenAdapt
+investigation](docs/adr-001-surface.md); no OpenAdapt code was copied. The
+assignment PDF was absent. No public repository push, deployment or submission
+has been performed.
