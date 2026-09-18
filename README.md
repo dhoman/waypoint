@@ -1,51 +1,81 @@
 # Waypoint
 
-Discover one UI capability with an LLM, compile its observed route, then replay
-with different inputs **without model access**. Point discovery at a website with
-a URL, a natural-language goal and named inputs. The default version-2 path learns
-screen rules, locators, parameter bindings and output extraction from the live UI;
-there is no application registry or per-site Python module to write.
+Discover a UI workflow with an LLM, save it as a typed capability graph, and
+replay it with different inputs **without a model**. Website-specific knowledge
+is artifact data, not a Python module per site. The implemented surface is a
+local Playwright browser; desktop/native automation is not implemented.
 
-Real public-site evidence: discovery opened the Travel category on Books to
-Scrape, then strict replay opened Poetry and returned Poetry's displayed books.
-The same generic adapter is tested against an unrelated parts catalog. The
-original member-console demo and version-1 artifacts remain supported below.
+## Start here
 
-The saved LLM run navigated member M-101's invoices ($165.50). Strict replay read
-M-202's different invoices ($100.00). A headed run paused for an unexpected
-dialog, captured the operator's dismiss click, validated the same live page,
-and completed. [Open the saved inspector](evidence/inspector.html) in a browser;
-select the identity-mismatch or handoff overlay and click an edge.
+- **Run it:** setup and commands below.
+- **Understand it:** [architecture and execution walkthrough](docs/ARCHITECTURE.md).
+- **Find a file or class:** [package map](waypoint/README.md).
+- **Add a surface or provider:** [extension guide](docs/EXTENDING.md).
+- **Change code:** [contributor guide](CONTRIBUTING.md), [test map](tests/README.md),
+  and [agent instructions](AGENTS.md).
+- **Review the take-home:** [REPORT.md](REPORT.md), [recorded evidence](evidence/README.md),
+  and the [documentation index](docs/README.md).
+
+There is now **one engine and one supported artifact schema (2.0)**. The retired
+version-1 implementation, `--member` mode and fixture-specific `amend` command
+were removed. Historical evidence is retained, not executable through the new
+CLI. Current `discover`, `replay`, `inspect`, `qualify`, `fixture` and strict
+entrypoints remain. Internal Python imports moved; see the package map.
 
 ## Setup
 
-Requires Python 3.12, [uv](https://docs.astral.sh/uv/), and local Chromium.
-The existing uv-managed Python 3.12.13 was used here; no second version manager
-is required. `.python-version` selects Python and `uv.lock` pins dependencies.
+Use the existing [uv](https://docs.astral.sh/uv/) installation; no additional
+Python version manager is required. `.python-version` selects Python 3.12;
+`uv.lock` pins dependencies.
 
 ```sh
 uv sync --extra discovery --extra dev
 uv run --no-sync playwright install chromium
 ```
 
-On Linux, install Playwright's OS dependencies if needed:
-`uv run --no-sync playwright install --with-deps chromium`.
-Headless replay needs no display. Manual takeover needs a local desktop and
-`--headed`; an optional remote desktop can provide that display in CI. A bare
-Xvfb instance alone does not provide a human an interactive screen.
+Linux may require `uv run --no-sync playwright install --with-deps chromium`.
+Headless runs need no display; manual control needs a desktop and `--headed`.
+An optional remote desktop can provide a display, but hosted infrastructure is
+not required.
 
-Discovery alone requires `OPENAI_API_KEY` in the environment and a selected
-model (`--model` or `WAYPOINT_MODEL`). Do not paste credentials into artifacts.
-The recorded run used `gpt-5.4-mini`, checked against the current
-[model documentation](https://developers.openai.com/api/docs/models/gpt-5.4-mini)
-and the actual API. The provider uses
-[Responses structured output](https://developers.openai.com/api/docs/guides/structured-outputs),
-`store=False`, and no provider retry. There is no hardcoded runtime model default.
+Discovery requires `OPENAI_API_KEY` and a selected model via `--model` or
+`WAYPOINT_MODEL`. The retained real runs used `gpt-5.4-mini`. Credentials are
+read from the environment, never put in the artifact. Only discovery calls the
+model. Replay-only installation is `uv sync`; the provider SDK is optional.
+Use `--no-sync` after selecting extras so subsequent commands keep that environment.
 
-## Test a website: discovery → replay → inspection
+## Quick model-free demo
 
-Use a site you are authorized to automate. This public scraping-practice site
-provides a small reproducible example (each output directory must be new):
+In terminal 1, start the synthetic member console with its legacy iframe:
+
+```sh
+uv run --no-sync waypoint fixture --port 8770
+```
+
+In terminal 2, replay the **saved schema-2 artifact** for another member:
+
+```sh
+uv run --no-sync python -m waypoint.strict replay \
+  --artifact evidence/web-member-discovery-6/capability.json \
+  --input memberId=M-202 --headed --out runs/member-replay
+
+uv run --no-sync waypoint inspect \
+  --artifact evidence/web-member-discovery-6/capability.json \
+  --runs runs/member-replay --out runs/member-inspector.html
+```
+
+Expected result: M-202's two displayed invoices, amounts 84.25 and 15.75,
+total **100.00**. Open `runs/member-inspector.html` in a browser. No server or
+frontend build is needed for the inspector. Each `--out` must be a new directory.
+
+Strict mode removes model credentials and actively verifies that provider
+imports and non-loopback Python connections are blocked. Chromium's website
+traffic has a separate runtime policy. This is a practical replay guard, **not an
+OS sandbox**. Each strict run saves `isolation.json`.
+
+## Discover on a website, then replay
+
+Use public/synthetic data on a site you are authorized to automate:
 
 ```sh
 uv run --no-sync waypoint discover \
@@ -63,143 +93,64 @@ uv run --no-sync waypoint inspect \
   --runs runs/books-replay --out runs/books-inspector.html
 ```
 
-Open `runs/books-inspector.html`. Results are in each run's `result.json`.
-For a model-free quick test, replace the artifact argument with
-`evidence/web-books-discovery-5/capability.json` and skip discovery.
+For your site, change the URL, goal and `--input NAME=VALUE` arguments. Inputs are
+scalar strings, JSON numbers or booleans; replay requires the same names/types,
+not the demonstrated values. Discover a separate capability for each task/site.
+You do not write selectors, screens or extraction code first.
 
-For **your site**, replace the URL and goal, and supply as many `--input NAME=VALUE`
-arguments as the task needs. Inputs are scalar strings, JSON numbers or booleans;
-the artifact requires exactly those names and types during replay. No selectors,
-screen catalog or output schema must be coded first. Discover a separate capability
-for each workflow/site; a bookstore artifact is not a universal website script.
+Inspect the resulting draft and test new inputs: the model can propose incorrect
+or overfitted rules. Rejected pre-action proposals get bounded discovery feedback;
+replay never calls a model or silently repairs its graph. One route does not
+prove all business branches. The missing-member branch is supported when
+explicitly authored in artifact data and is covered by tests; it is not invented
+from a successful search.
 
-Authentication and permissions are runtime configuration, not application code:
-
-- `--headed --prepare`: manually sign in/prepare the same browser, then press
-  Enter in the terminal. Browser storage is not saved. Repeat for each fresh run.
-- `--allow-origin https://login.example.com`: explicitly authorize an additional
-  frame/navigation/API origin. Popups are currently blocked.
-- `--allow-method POST`: authorize requests needed by a trusted app or login.
-  This grants that method across allowed origins; use narrowly and cautiously.
-- `--allow-control 'Exact visible label'`: explicitly authorize an otherwise
-  unclassified control. Do not grant consequential permissions casually.
-- `--headed --interactive` on replay: keep the same session open for takeover
-  if an unknown screen blocks the run; use `take TOKEN`, then `resume TOKEN`.
-
-**Generic does not mean guaranteed on every page.** DOM-based forms, links,
-tables, lists and named iframes are supported. CAPTCHA, canvas-only controls,
-unnamed frames, pop-up login and complex shadow-DOM apps may need adapter-level
-improvements or manual steps. Discovery proposals can be wrong; inspect and
-validate the draft with different inputs. Three unchanged observations or a
-deadline stops discovery. Replay never calls a model to compensate for drift.
-Missing-record branches are not inferred from a happy path: they require a
-separately observed/reviewed artifact amendment, not an engine code change.
-
-Use public/synthetic data for now: UI content goes to the configured model, and
-visible text/screenshots are retained locally. Form masking is **not** general
-PII removal. Do not run this prototype on sensitive production data.
-
-## Original member-console acceptance demo (version 1 compatibility)
-
-Start the application in terminal 1:
+Outputs and failures are in `result.json`, events in `events.jsonl`. To annotate a
+fully covered draft without modifying it:
 
 ```sh
-uv run --no-sync waypoint fixture
+uv run --no-sync waypoint qualify \
+  --artifact runs/books-discovery/capability.json \
+  --runs runs/books-replay --out runs/books-validated.json
 ```
 
-In terminal 2 (each `--out` must be a fresh directory):
+Qualification requires matching artifact fingerprints and execution evidence
+for every transition, alternative destination and terminal; it is not approval
+to operate on arbitrary tenants or production systems.
 
-```sh
-# The only step below that calls a model. Uses the existing OPENAI_API_KEY.
-uv run --no-sync waypoint discover --model gpt-5.4-mini \
-  --member M-101 --out runs/discovery
+## Same-session human control
 
-# Add the explicitly authored missing-member outcome as a new draft revision.
-uv run --no-sync waypoint amend \
-  --artifact runs/discovery/capability.json --out runs/capability.json
-
-# API credentials removed; provider imports and external Python sockets blocked.
-uv run --no-sync python -m waypoint.strict replay \
-  --artifact runs/capability.json --member M-202 --out runs/replay
-
-uv run --no-sync python -m waypoint.strict replay \
-  --artifact runs/capability.json --member M-999 --out runs/missing
-
-uv run --no-sync waypoint qualify --artifact runs/capability.json \
-  --runs runs/replay runs/missing --out runs/capability-validated.json
-
-uv run --no-sync waypoint inspect --artifact runs/capability-validated.json \
-  --runs runs/replay runs/missing --out runs/inspector.html
-```
-
-Open `runs/inspector.html` with any browser. It is a self-contained, offline HTML
-file: no web service, CDN, graph editor, or build tool. The checked-in
-`evidence/inspector.html` is ready to open. On macOS, `open evidence/inspector.html`.
-The selected run shows actual completed edges, failures/interventions, identity
-facts, recognition checks, actions, provenance, evidence and timing categories.
-
-For the shortest model-free demo, start the fixture and run:
+For the local demo, inject a blocking notice:
 
 ```sh
 uv run --no-sync python -m waypoint.strict replay \
-  --artifact evidence/capability.json --member M-202 --out runs/quick-replay
-```
-
-Replay-only installation is `uv sync` (without the `discovery` extra); the provider
-SDK is optional. Use `--no-sync` after choosing extras so uv does not change the
-environment for later commands. `python -m waypoint.strict --self-test` attempts
-a prohibited provider import and external connection and verifies both fail.
-Strict replay also writes `isolation.json`; this is stronger than counting calls,
-but is not an OS sandbox for arbitrary hostile Python programs.
-
-## Human takeover on the same session
-
-```sh
-uv run --no-sync python -m waypoint.strict replay \
-  --artifact evidence/capability.json --member M-202 \
-  --url 'http://127.0.0.1:8765/?scenario=dialog' \
+  --artifact evidence/web-member-discovery-6/capability.json \
+  --input memberId=M-202 \
+  --url 'http://127.0.0.1:8770/?scenario=dialog' \
   --headed --interactive --out runs/handoff
 ```
 
-The browser remains open at the notice. In the command terminal:
+At the pause, enter `take TOKEN` using the printed token. Dismiss the notice in
+the **same browser window**, then enter `resume TOKEN`. You can also `cancel`.
+Automation cannot act during human ownership. Resume observes again and verifies
+a permitted checkpoint and identity; approval does not waive those checks.
+Browser-page click targets and redacted input events are captured, not global
+keystrokes or browser-chrome activity.
 
-1. Enter `take TOKEN`, using the fresh token printed for this intervention.
-2. In that **same Chromium window**, optionally enter a fake operator note and
-   click **Dismiss notice**. You may also manually reach the invoice checkpoint.
-3. Enter `resume TOKEN`. Fresh recognition, entity identity, and outgoing guards
-   must pass. If they do not, ownership stays human. `cancel` ends the run.
+Other runtime options:
 
-Automation cannot act while awaiting human control, during human ownership, or
-during resume validation. Duplicate/stale commands fail. The CLI explicitly
-transfers ownership; a browser click alone does not authorize replay. A paused
-result is `awaiting_intervention`, never success. Noninteractive runs save that
-result and close; they cannot later resume a destroyed session.
+| Option | Effect |
+|---|---|
+| `--headed --prepare` | Manually prepare/login to the same fresh session, then press Enter. Storage is not persisted. |
+| `--allow-origin https://login.example.com` | Authorize another frame/navigation/request origin. Popups remain blocked. |
+| `--allow-method POST` | Permit that method across allowed origins, e.g. for a trusted login. Broad permission; use cautiously. |
+| `--allow-control 'Exact label'` | Explicitly authorize an otherwise disallowed control. This may permit consequential actions. |
 
-Captured in-page clicks include target labels; input events contain `[redacted]`,
-never typed values. Browser chrome and OS interactions are not recorded. DOM
-`isTrusted` is not proof of physical human input; tests and tools can produce
-trusted events. The retained human demonstration contains the actual dismiss
-click; input-value redaction has a focused test. The capture is session-scoped,
-not a global keyboard logger.
+The fixture also supports `?scenario=slow`, `mismatch`, `ambiguous`, and
+`readonly`. These are developer-controlled setup, not tools exposed to the model.
+Do not assume a fixture variant is an approved graph branch.
 
-## Reproducible scenarios and tests
-
-With the fixture running, use the same artifact and member M-202, changing only
-the runtime URL and output directory:
-
-| Scenario | Runtime URL suffix | Expected result |
-|---|---|---|
-| Different member | `/` | `succeeded`, B's two invoices, total 100 |
-| Missing member | `/`, pass `--member M-999` | `business_outcome / member_not_found` |
-| Slow load | `/?scenario=slow` | B's outputs after a bounded readiness wait |
-| Blocking notice | `/?scenario=dialog` | `awaiting_intervention`; headed interactive handoff |
-| Wrong record | `/?scenario=mismatch` | `failed / identity`, before opening invoices |
-| Duplicate results | `/?scenario=ambiguous` | `failed / ambiguity`, before selecting a profile |
-| Read-only variant | `/?scenario=readonly` | intervention; unsupported variant is not bypassed |
-
-These are developer fixture controls. Neither discovery nor replay calls fixture
-setup APIs or reads fixture code/data; they observe the resulting UI. The model
-is not given these scenario switches.
+## Development and limitations
 
 ```sh
 uv run --no-sync pytest -q
@@ -207,50 +158,21 @@ uv run --no-sync ruff check waypoint tests
 uv run --no-sync ruff format --check waypoint tests
 ```
 
-Tests prioritize public behavior: actual browser output, wrong-entity refusal,
-ambiguous screens/targets/guards, malformed graphs, policy-disallowed clicks,
-loading deadlines, no-progress discovery, ownership and stale resume, redacted
-input events, uncertain-write retry refusal, and inspector interaction. Test
-provider responses and authored routes live in `tests/`; they are not real
-discovery evidence. TDD was used incrementally after the initial schema scaffold.
+The [test map](tests/README.md) explains focused runs, test-only adapters and safety
+coverage. The browser adapter and in-memory test adapter exercise the same
+surface interface; the latter is **not** desktop support.
 
-## Code map and limits
+DOM forms, links, tables, repeated lists and named iframes are supported. CAPTCHA,
+canvas-only controls, unnamed frames, popup authentication and complex shadow-DOM
+workflows may require manual steps or adapter improvements. Capabilities remain
+bounded, app-scoped drafts until validated; no global route planner exists.
 
-| Module | Responsibility |
-|---|---|
-| `web/schema.py` | Generic version-2 artifact, predicates/actions, graph validation |
-| `web/browser.py`, `web/observe.js`, `web/policy.py` | Generic session, observation, targeting and permissions |
-| `web/discovery.py`, `provider.py`, `web/compiler.py` | LLM discovery and declarative route compilation |
-| `web/interpret.py`, `web/runtime.py`, `delivery.py` | Model-free recognition, extraction, replay and uncertainty |
-| Root `schema.py`, `browser.py`, `engine.py`, `compiler.py` | Legacy version-1 member-console compatibility |
-| `ownership.py`, `evidence.py` | Transfer protocol, correlated trace and capture boundary |
-| `inspector.py`, `inspector.html` | Local read-only graph/run inspection |
-| `qualification.py` | Evidence annotations with artifact-digest and coverage checks |
-| `fixture.py` | Developer-owned synthetic application; not an agent tool |
+UI text is sent to the configured model during discovery and retained in local
+evidence. Form masking and redacted input events are **not production PII
+removal**. Use public/synthetic data only. Policy constrains origins, methods and
+control semantics, but cannot prove that arbitrary page scripts or GET handlers
+are harmless.
 
-Each discovery produces one bounded browser capability, not a global route planner.
-Logical screen types are reused; identity is bound to the workflow's named inputs.
-Action retries are disabled (only `retries: 0` is admitted); modeled recovery is
-a bounded wait for visible loading. No generic Back/reset or model self-healing.
-The main flow is read-only. A synthetic unit test covers uncertain-write refusal;
-there is no financial transaction implementation.
-
-The generic policy allows the selected origin, GET/HEAD/OPTIONS requests,
-structural reads, form input and recognizable navigation/search controls.
-Additional origins/methods/control labels require explicit runtime permissions.
-Passive scripts/images/styles may load cross-origin; document/API requests and
-frames are constrained. Popups are blocked. This is a conservative semantic
-heuristic, not proof that JavaScript or GET handlers cannot mutate business data.
-The legacy path retains its tighter fixture-specific allowlist. Screenshots mask
-form values, but other visible page data remains inspectable.
-This is **not production PII redaction**, tenant isolation, or a security sandbox.
-
-[REPORT.md](REPORT.md) describes the design and cuts.
-[ADR 001](docs/adr-001-surface.md) records the bounded OpenAdapt investigation and
-direct-adapter choice; no OpenAdapt code was copied. Native/desktop portability
-is an unimplemented seam, not a working adapter. Validation annotations are
-saved separately; they never rewrite an active artifact. Evidence counts are
-tiny demonstrations, not a reliability estimate.
-
-The assignment PDF was not present. This implementation follows the requirements
-reproduced in the build prompt. Nothing was pushed, deployed, or emailed.
+[OpenAdapt investigation](docs/adr-001-surface.md): independently implemented
+adapter, no copied OpenAdapt code. The assignment PDF was absent. No public
+repository push, deployment or submission has been performed.

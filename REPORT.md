@@ -14,9 +14,10 @@ cover an unrelated parts catalog and the synthetic member console's iframe.
 Generic discovery also executed the full four-action iframe route and strict
 replay returned member B's typed invoices and total of 100.00. Generic handoff
 has a simulated-operator browser regression, not a new physical-human recording.
-The original version-1 member-to-invoice demo/evidence remains readable via
-explicit compatibility mode. Its four-action route, business branch and real
-headed intervention are retained rather than represented as generic discovery.
+The version-1 implementation was retired at the user's request. Its original
+evidence/static inspector remains historical, not a runnable compatibility mode
+or a claim of new generic discovery. Current-engine tests cover business branches
+and safety behavior without retaining a second interpreter.
 
 The system uses Python/Pydantic, one async Playwright session owner, a small CLI,
 JSON artifacts, JSONL events, and a standalone HTML/SVG inspector. The surface
@@ -25,6 +26,13 @@ reads, screenshots, observation, policy and session ownership. Discovery receive
 a provider interface. Replay does not import discovery or its provider. The
 strict entrypoint removes API credentials and actively blocks provider imports
 and external Python connections; browser traffic has its own allowlist.
+
+Packages separate `domain`, `discovery`, `runtime`, `surfaces`, `providers`,
+`evidence`, `inspector`, `app` and `demo`. Application wiring constructs adapters;
+engines consume structural protocols and never import concrete adapters. The
+browser and a test-only in-memory adapter exercise that seam. Class relationships,
+execution and extension steps are documented in `docs/ARCHITECTURE.md`,
+`docs/EXTENDING.md` and `waypoint/README.md`.
 
 OpenAdapt flow 1.35.1 was inspected at commit
 `cfea6ecd9540b78bafcdf6bb72887d61c2a59fc0`. Its structural and native-action seams
@@ -41,7 +49,8 @@ Schema 2.0 separates reusable screens, task-specific control states/transitions,
 and actual run evidence. Search before and after input uses one screen definition
 with different progress. Member profiles share landmarks but require an exact
 extracted Member ID equal to the mandatory input. Names, balances, and row counts
-do not become screen types. Dialogs, loading and read-only access change behavior.
+do not become screen types. Dialogs and loading are explicit observation facts;
+access variants require applicable artifact predicates rather than implicit rules.
 
 Artifacts include capability/revision, observed app title, origin, entry path,
 surface, explicitly unasserted app version until reviewed,
@@ -53,7 +62,7 @@ fill/select/click/press/check/extract/outcome actions, and explicit predicates.
 Outputs use field, unique text/attribute, table, repeated list or numeric sum
 rules with scalar/column types. There is no artifact-provided executable code.
 Models reject unsupported types/references, missing nodes, unreachable terminals,
-invalid bindings and unsafe retry declarations. Global visit/step bounds limit
+invalid bindings and unsafe retry declarations. Global step bounds limit
 cycles; this is not a general state-machine theorem prover.
 
 Compilation preserves the observed route. Repeated screen equivalence is checked
@@ -61,9 +70,9 @@ against captured landmarks and remains draft until replay evidence exists.
 Version-2 output and screen rules are model proposals checked by the executor;
 exact displayed entity-field matches add input identity bindings. Rejected
 proposals receive bounded discovery-only feedback, never an implicit replay fix.
-For version 1, output contracts were authored and a subsequent revision adds
-the unseen missing-member branch with authored provenance. Generic discovery
-does not claim to discover branches it has not seen. The
+The current-engine test fixture adds a missing-member branch as explicit authored
+artifact data. Generic discovery does not claim to discover branches it has not
+seen, and no fixture-specific amendment command remains. The
 qualification command requires matching artifact digests and coverage of every
 transition, alternative destination and terminal. It produces separate validation
 annotations, not an approval service or a claim that other routes do not exist.
@@ -74,7 +83,7 @@ Replay validates artifact/inputs, observes before each action, checks recognitio
 and identity, resolves a unique contextual target, enforces policy, and checks
 destination/postconditions afterward. Multiple screen or guard matches are errors,
 not list-order precedence. The executor checks visible identity again immediately
-before acting. The missing-member condition returns a declared business outcome;
+before acting. An explicitly modeled missing-member branch returns a business outcome;
 wrong identity and ambiguous targeting fail before the next relevant action.
 Unknown observations retain screenshots/filtered snapshots and request intervention.
 
@@ -136,7 +145,7 @@ form input and recognizable navigation/search, but block consequential labels
 and unclassified buttons. Explicit CLI permissions can add origins, methods and
 exact control labels. This semantic heuristic cannot prove arbitrary GETs or
 page scripts are read-only. Passive assets can load across origins; this is not
-a hostile-site sandbox. The version-1 fixture retains its narrower route policy.
+a hostile-site sandbox. The retired fixture-specific policy is not an active path.
 Close account is rejected even when submitted as an ordinary click. The model's
 risk assertion is never authority. UI text is untrusted input to the discovery
 prompt; all chosen operations still pass the executor's allowlist.

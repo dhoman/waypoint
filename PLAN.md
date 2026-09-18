@@ -7,9 +7,9 @@
   evidence, inspector and demo packages; keep current CLI/artifact formats stable.
 - [x] Make the surface/provider interfaces explicit and test substitution,
   ownership, strict isolation and current-engine safety scenarios.
-- [ ] Document execution, class relationships, dependency rules and extension steps;
+- [x] Document execution, class relationships, dependency rules and extension steps;
   add contributor/agent instructions and a navigable documentation index.
-- [ ] Verify tests, installed-package resources and retained version-2 replay;
+- [x] Verify tests, installed-package resources and retained version-2 replay;
   commit coherent milestones. Historical evidence is retained, not rewritten.
 
 ## General website correction
@@ -20,7 +20,8 @@
 - [x] Prove reuse against unrelated applications and a public site without changing engine code.
 - [x] Update documentation, retain real evidence, and commit verified milestones.
 
-Version 1 remains readable for existing evidence. New websites must not require
+At this earlier milestone version 1 remained readable; the package refactor above
+supersedes that choice and removes it at the user's request. New websites must not require
 application-specific code, selectors or profiles before discovery. Authentication,
 additional origins and consequential-action permissions remain explicit runtime
 choices rather than authority inferred from page content.

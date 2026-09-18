@@ -1,5 +1,59 @@
 # Retained execution evidence
 
+**Current status after the package refactor:** only schema 2.0 is supported.
+Use `web-member-discovery-6/capability.json` or
+`web-books-discovery-5/capability.json` with the current CLI. Schema-1 artifacts,
+their static inspector, `--member` examples and `amend` commands below are
+historical records, not runnable current instructions. Nothing in the retained
+run files was rewritten. See the [current commands](../README.md) and
+[package map](../waypoint/README.md).
+
+The refactor preserves the canonical fingerprints of both retained schema-2
+artifacts (regression-tested) while changing source paths/fingerprints. It does
+not claim that historical runs executed the new source. Current-engine tests
+cover the old safety scenarios, and in-memory adapter tests verify the surface
+seam without claiming desktop support. A source-only refactor does not require
+another model run; model-free acceptance is recorded separately when performed.
+
+## Package-refactor acceptance
+
+`refactor-replay/` is a new **actual strict replay**, not a new discovery. It ran
+the wheel built from code commit `0f0b64d`, installed in an isolated temporary
+directory and invoked from `/private/tmp` rather than the checkout. The original
+`web-member-discovery-6/capability.json` was used unchanged against the fixture
+on port 8770. M-202's typed rows remained 84.25 and 15.75, total 100.00; provider
+imports/external Python connections were actively blocked.
+
+- Source SHA-256: `f43c67a1b66d2f8151eb0513affea5cc7adfa7ce5692d7b8ba759af4976d5a41`.
+- Artifact SHA-256: `7afcf900ba6e43ca226a080c39275820230424b91c3cc9ade6ce6cf967b7a97e`.
+- The installed browser observer was loaded and the installed inspector template
+  generated [refactor-inspector.html](refactor-inspector.html).
+- 38 tests passed, including canonical-hash compatibility for both retained
+  schema-2 artifacts, in-memory surface substitution, current-engine safety
+  scenarios, dependency direction, and real browser policy/handoff behavior.
+- Ruff checks and formatting passed. Local documentation links were checked.
+
+Build/install commands used a fresh temporary directory:
+
+```sh
+uv build --wheel --out-dir /private/tmp/waypoint-refactor.3gvSbV/dist
+uv pip install --python .venv/bin/python --target /private/tmp/waypoint-refactor.3gvSbV/site --no-deps --no-index /private/tmp/waypoint-refactor.3gvSbV/dist/waypoint_ui-0.1.0-py3-none-any.whl
+```
+
+The verification process used that `site` directory on `PYTHONPATH`, asserted
+`waypoint.__file__` came from the installed wheel, started `FixtureServer(8770)`,
+then ran the equivalent of this command with the project's interpreter from
+outside the checkout (absolute artifact/output paths):
+
+```sh
+python -m waypoint.strict replay --artifact evidence/web-member-discovery-6/capability.json --input memberId=M-202 --out evidence/refactor-replay
+```
+
+The fixture was stopped afterward. No model was called and no historical run was
+edited. To reproduce locally, follow the main README's model-free demo with a
+fresh output directory. A passing installed-wheel replay does not establish
+native support or general reliability across websites.
+
 All run directories here contain **actual browser executions**, using fake
 application data or the public Books to Scrape practice catalog. There are no
 fabricated provider traces in this directory.
